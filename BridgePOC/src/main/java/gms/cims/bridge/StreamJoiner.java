@@ -37,18 +37,18 @@ public class StreamJoiner {
         //ClaimStatusClaimLink: {"CL_ClaimID": 12229719, "CS_ClaimStatusID": 26711}, {"CL_ClaimID": 12229719, "CS_ClaimStatusID": 26711, "__deleted": "false"}
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<GenericRecord, GenericRecord> ClaimStatus = builder.stream("CIMSTEST.Financial.ClaimStatus");
+        KStream<String, GenericRecord> ClaimStatus = builder.stream("CIMSTEST.Financial.ClaimStatus");
         KStream<GenericRecord, GenericRecord> ClaimStatusClaimLink = builder.stream("CIMSTEST.Financial.ClaimStatusClaimLink");
         KStream<GenericRecord, GenericRecord> ClaimContractLink = builder.stream("CIMSTEST.Financial.ClaimContractLink");
 
-        KTable<Integer, GenericRecord> T_ClaimStatus = ClaimStatus.map((key, value) -> KeyValue.pair(((Integer) (key.get("CS_ClaimStatusID"))), value)).toTable();
+/*        KTable<Integer, GenericRecord> T_ClaimStatus = ClaimStatus.map((key, value) -> KeyValue.pair(((Integer) (key.get("CS_ClaimStatusID"))), value)).toTable();
         KTable<Integer, GenericRecord> T_ClaimStatusClaimLink = ClaimStatusClaimLink.map((key, value) -> KeyValue.pair(((Integer) (key.get("CS_ClaimStatusID"))), value)).toTable();
         KTable<Integer, GenericRecord> T_ClaimContractLink = ClaimContractLink.map((key, value) -> KeyValue.pair(((Integer) (key.get("CL_ClaimID"))), value)).toTable();
 
         KTable<Integer, GenericRecord> T_ClaimStatus_ClaimStatusClaimLink= innerJoinKTable(T_ClaimStatusClaimLink,T_ClaimStatus, "ClaimStatus_ClaimStatusClaimLink");
         KTable<Integer, GenericRecord> T_ClaimStatus_ClaimStatusClaimLink_ClaimContractLink= innerJoinKTable(T_ClaimContractLink,T_ClaimStatus_ClaimStatusClaimLink, "ClaimStatus_ClaimStatusClaimLink_ClaimContractLink");
 
-        T_ClaimStatus_ClaimStatusClaimLink_ClaimContractLink.toStream().to(Arguments.outputTopic);
+        T_ClaimStatus_ClaimStatusClaimLink_ClaimContractLink.toStream().to(Arguments.outputTopic);*/
 
         return builder.build();
     }
