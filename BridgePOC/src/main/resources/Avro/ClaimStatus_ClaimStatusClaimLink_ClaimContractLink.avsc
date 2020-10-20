@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "namespace": "gms.cims.bridge",
+  "name": "ClaimStatus_ClaimStatusClaimLink_ClaimContractLink",
+  "fields": [
+    {"name":"CL_ClaimID", "type":["int", "null"], "default": -1},
+    {"name":"CS_ClaimStatusID", "type":["int", "null"], "default": -1},
+    {"name":"CS_Description", "type":["string", "null"], "default": "NONE"},
+    {"name":"CC_Relationship", "type":["int", "null"], "default": -1},
+    {"name":"CO_ContractID", "type":["int", "null"], "default": -1}
+
+  ]
+}

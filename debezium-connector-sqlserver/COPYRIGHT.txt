@@ -1,7 +1,6 @@
 Cobolbaby
 Aaron Brady
 Aaron Rosenberg
-Abhishek Gupta
 Addison Higham
 Adrian Kreuziger
 Akshath Patkar
@@ -17,12 +16,10 @@ Andreas Bergmeier
 Andras Istvan Nagy
 Andrew Garrett
 Andrew Tongen
-Andrey Ignatenko
 Andrey Pustovetov
 Andy Teijelo
 Anton Kondratev
 Anton Martynov
-Arik Cohen
 Arkoprabho Chakraborti
 artiship
 Ashhar Hasan
@@ -35,7 +32,6 @@ Ben Hardesty
 Ben Williams
 Bin Li
 Bingqin Zhou
-Björn Häuser
 Bob Roldan
 Braden Groom
 Braden Staudacher
@@ -48,7 +44,6 @@ Chris Riccomini
 Christian Posta
 Cliff Wheadon
 Collin Van Dyck
-Cory Harper
 Cyril Scetbon
 Daan Roosen
 Dave Cumberland
@@ -68,7 +63,6 @@ Eero Koplimets
 Elan Hasson
 Emmanuel Brard
 Emrul Islam
-Eric Weaver
 Eric S. Kreiseir
 Ewen Cheslack-Postava
 Fabian Aussems
@@ -79,16 +73,15 @@ Felix Eckhardt
 Fintan Bolton
 Frank Mormino
 Gagan Agrawal
-Ganesh Ramasubramanian
 Grant Cooksey
 Guillaume Rosauro
 Guillaume Smet
 Gunnar Morling
 Gurnaaz Randhawa
-Guy Pascarella
 Grzegorz Kołakowski
 Jan Hendrik Dolling
 Hans-Peter Grahsl
+Hector Ventura Reyes
 Henryk Konsek
 Horia Chiorean
 Hossein Torabi
@@ -103,7 +96,7 @@ Ivan San Jose
 Ivan Trusov
 Ivan Vucina
 Jakub Cechacek
-James Gormley
+James Carl
 Jan-Hendrik Dolling
 Jan Uyttenhove
 Jaromir Hamala
@@ -115,7 +108,6 @@ John Graf
 John Martin
 John Psoroulas
 Jon Casstevens
-Jonas Lins
 Jordan Bragg
 Jork Zijlstra
 Jos Huiting
@@ -138,26 +130,22 @@ Liu Hanlin
 Liu Lang Wa
 Luis Garcés-Erice
 Lukas Krejci
-Lukasz Korzeniowski
 lyidataminr
 Maciej Bryński
 MaoXiang Pan
 Marc Zbyszynski
 Mario Mueller
 Mariusz Strzelecki
-Matt Beary
 Matteo Capitanio
 Mathieu Rozieres
 Matthias Wessendorf
 Max Kaplan
 Melissa Winstanley
 Michael Wang
-Mickaël Isaert
 Mike Graham
 Mincong Huang
 Moira Tagle
 Muhammad Sufyian
-Nathan Mills
 Navdeep Agarwal
 Nayana Hettiarachchi
 Nikhil Benesch
@@ -168,7 +156,6 @@ Orr Ganani
 Paul Mellor
 Peng Lyu
 Peter Goransson
-Peter Junos
 Peter Urbanetz
 Philip Sanetra
 Pradeep Mamillapalli
@@ -210,14 +197,12 @@ Tautvydas Januskevicius
 Taylor Rolison
 Theofanis Despoudis
 Thomas Deblock
-Thomas Prelle
 Tom Bentley
 Tomaz Lemos Fernandes
 Tony Rizko
 Tova Cohen
 Vasily Ulianko
 Vedit Firat Arig
-Victor Xiang
 Wang-Yu-Chao
 Wei Wu
 WenZe Hu

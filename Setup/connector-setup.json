@@ -2,23 +2,19 @@
     "name": "cims-connector",
     "config": {
         "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
-        "database.hostname": "172.16.6.68",
+        "database.hostname": "172.16.6.51",
         "database.port": "1433",
         "database.user": "debezium",
         "database.password": "Debetest01",
         "database.dbname": "CIMS",
         "database.server.name": "CIMSTEST",
-        "table.include.list": "Financial.TravelAssistCaseLink, Financial.CaseNoteLink, Financial.ClaimCase",
-        "column.exclude.list": ".*RowVersion, .*LastUpdate, .*UserID",
-        "value.converter": "io.confluent.connect.avro.AvroConverter",
-        "value.converter.schema.registry.url": "http://schema-registry:8081",
-        "value.converter.enhanced.avro.schema.support": "true",
-        "time.precision​.mode": "connect",
+        "table.whitelist": "Financial.ClaimStatus, Financial.ClaimStatusClaimLink, Financial.ClaimContractLink",
+        "column.blacklist": ".*\\..*\\.RowVersion, .*\\..*\\.LastUpdate, .*\\..*\\.UserID",
+        "database.history.kafka.bootstrap.servers": "broker:9092",
+        "database.history.kafka.topic": "dbhistory.CIMS",
         "decimal.handling.mode": "double",
         "transforms": "unwrap",
         "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
-        "transforms.unwrap.drop.tombstones": "false",
-        "database.history.kafka.bootstrap.servers": "broker:29092",
-        "database.history.kafka.topic": "dbhistory.CIMS"
+        "transforms.unwrap.drop.tombstones": "false"
     }
 }
