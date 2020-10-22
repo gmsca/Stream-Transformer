@@ -85,6 +85,10 @@ public class KafkaAvroSerializer extends AbstractKafkaAvroSerializer implements 
                         writer = new GenericDatumWriter<>(schema);
                     }
 
+                    if (value.toString().contains("CA_ContactDate")) {
+                        Integer temp = 0;
+                    }
+
                     ((DatumWriter)writer).write(value, encoder);
                     encoder.flush();
                 }

@@ -1,11 +1,8 @@
 package org.gms;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerde;
-import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
-import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
-import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
@@ -14,15 +11,13 @@ import org.apache.kafka.streams.kstream.KTable;
 import org.json.JSONObject;
 
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public class main {
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    public static void main(String[] args) {
         SetupArguments(args);
         Topology topology = buildTopology();
         Properties props = buildProperties();
-        WaitForInputTopics(props);
 
         final KafkaStreams streams = new KafkaStreams(topology, props);
         streams.cleanUp();
@@ -31,11 +26,6 @@ public class main {
     }
 
     private static Properties buildProperties() {
-
-        /*final Map<String, String> serdeConfig = Collections.singletonMap(Arguments.SCHEMA_REGISTRY, Arguments.SchemaRegistryURL);
-        final Serde<GenericRecord> valueGenericAvroSerde = new GenericAvroSerde();
-        valueGenericAvroSerde.configure(serdeConfig, false); // `false` for record values*/
-
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, Arguments.ApplicationID);
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, Arguments.Broker);
@@ -65,29 +55,8 @@ public class main {
 
     private static GenericRecord MergeMessages(GenericRecord left, GenericRecord right) {
         JSONObject mergedValues = MergeValues(left, right);
-        Schema mergedSchema = MergeSchema(left, right);
-        GenericRecord mergedGenericRecord = CreateGenericRecord(mergedValues, mergedSchema);
+        ObjectMapper objectMapper = new ObjectMapper();
         return mergedGenericRecord;
-    }
-
-    private static Schema MergeSchema(GenericRecord left, GenericRecord right) {
-        String rightSchemaString = right.getSchema().toString();
-        List<Field> rightFields = right.getSchema().getFields();
-        List<Field> leftFields = left.getSchema().getFields();
-        ArrayList<Field> mergedFields = new ArrayList();
-        rightFields.forEach(field -> mergedFields.add(new Field(field.name(), field.schema(), field.doc(), field.defaultVal())));
-
-        for (Field field : leftFields) {
-            if (!rightSchemaString.contains(field.name())) {
-                Field newField = new Field(field.name(), field.schema(), field.doc(), field.defaultVal());
-                mergedFields.add(newField);
-                if (mergedFields.size() > 5) {
-                    System.out.println();
-                }
-            }
-        }
-        Schema mergedSchema = Schema.createRecord("Claim", "Claim Record", "org.gms", false, mergedFields);
-        return mergedSchema;
     }
 
     private static JSONObject MergeValues(GenericRecord left, GenericRecord right) {
@@ -101,48 +70,24 @@ public class main {
         return rightJSON;
     }
 
-    private static GenericRecord CreateGenericRecord(JSONObject values, Schema schema) {
-        final GenericData.Record record = new GenericData.Record(schema);
-        values.keys().forEachRemaining(k -> {
-            record.put(k, values.get(k));
-        });
-        return record;
-    }
-
     private static String SetKey(GenericRecord value, String commonKey) {
         if (value==null) return null;
         else return value.get(commonKey).toString();
     }
 
-    private static void WaitForInputTopics(Properties props) throws ExecutionException, InterruptedException {
-        AdminClient admin = AdminClient.create(props);
-        Integer sleepTime = 5000;
-        for (String topic : Arguments.InputTopicNames) {
-            boolean topicExists = admin.listTopics().names().get().stream().anyMatch(topicName -> topicName.equalsIgnoreCase(topic));
-            while (!topicExists) {
-                Thread.sleep(sleepTime);
-                System.out.println("Waiting for Topic: " + topic);
-                topicExists = admin.listTopics().names().get().stream().anyMatch(topicName -> topicName.equalsIgnoreCase(topic));
-            }
-        }
-    }
-
-    private static ArrayList<KTable<String, GenericRecord>> KeySharedTableGenerator(StreamsBuilder builder) {
+    private static ArrayList<KTable<String, GenericRecord>> KeySharedTableGenerator(StreamsBuilder builder, String[] TopicNames, String commonKey) {
         ArrayList<KTable<String, GenericRecord>> tables = new ArrayList<>();
-        for (String topicName : Arguments.InputTopicNames) {
+        for (String topicName : TopicNames) {
             KStream<String, GenericRecord> topic = builder.stream(topicName);
-            KTable<String, GenericRecord> keySetTopic = topic.map((key, value) -> KeyValue.pair(SetKey(value, Arguments.CommonKey), value)).toTable();
+            KTable<String, GenericRecord> keySetTopic = topic.map((key, value) -> KeyValue.pair(SetKey(value, commonKey), value)).toTable();
             tables.add(keySetTopic);
         }
         return tables;
     }
     private static void SetupArguments(String[] args) {
-        for (int i = 0; i < (args.length-Arguments.NonInputTopicArgs); i++) Arguments.InputTopicNames.add(args[i]);
-        Arguments.OutputTopicName = args[args.length-Arguments.NonInputTopicArgs];
-        Arguments.CommonKey = args[args.length-Arguments.NonInputTopicArgs+1];
-        Arguments.Broker = args[args.length-Arguments.NonInputTopicArgs+2];
-        Arguments.SchemaRegistryURL = args[args.length-Arguments.NonInputTopicArgs+3];
-        Arguments.ApplicationID = args[args.length-Arguments.NonInputTopicArgs+4];
-        Arguments.AutoOffsetResetConfig = args[args.length-Arguments.NonInputTopicArgs+5];
+        Arguments.Broker = args[2];
+        Arguments.SchemaRegistryURL = args[3];
+        Arguments.ApplicationID = args[4];
+        Arguments.AutoOffsetResetConfig = args[5];
     }
 }

@@ -8,43 +8,7 @@ services:
     first-join:
         image: stream-transformer
         environment:
-            TOPIC_NAMES: CIMSTEST.Financial.ClaimStatusClaimLink CIMSTEST.Financial.ClaimStatus
-            OUTPUT_TOPIC: ClaimStatus_ClaimStatusClaimLink
-            COMMON_KEY: CS_ClaimStatusID
             BROKER: http://broker:29092
             SCHEMA_REGISTRY: http://schema-registry:8081
             APPLICATION_ID: first-join
-            AUTO_OFFSET_RESET_CONFIG: earliest
-
-    second-join:
-        image: stream-transformer
-        environment:
-            TOPIC_NAMES: CIMSTEST.Financial.TravelAssistCaseLink CIMSTEST.Financial.CaseNoteLink CIMSTEST.Financial.ClaimCase
-            OUTPUT_TOPIC: TravelAssistCaseLink_CaseNoteLink_ClaimCase
-            COMMON_KEY: CA_CaseID
-            BROKER: http://broker:29092
-            SCHEMA_REGISTRY: http://schema-registry:8081
-            APPLICATION_ID: second-join
-            AUTO_OFFSET_RESET_CONFIG: earliest
-
-    third-join:
-        image: stream-transformer
-        environment:
-            TOPIC_NAMES: ClaimStatus_ClaimStatusClaimLink CIMSTEST.ClaimContractLink
-            OUTPUT_TOPIC: ClaimStatus_ClaimStatusClaimLink_ClaimContractLink
-            COMMON_KEY: CL_ClaimID
-            BROKER: http://broker:29092
-            SCHEMA_REGISTRY: http://schema-registry:8081
-            APPLICATION_ID: third-join
-            AUTO_OFFSET_RESET_CONFIG: earliest
-
-    final-join:
-        image: stream-transformer
-        environment:
-            TOPIC_NAMES: TravelAssistCaseLink_CaseNoteLink_ClaimCase ClaimStatus_ClaimStatusClaimLink_ClaimContractLink
-            OUTPUT_TOPIC: Final_Topic
-            COMMON_KEY: CO_ContractID
-            BROKER: http://broker:29092
-            SCHEMA_REGISTRY: http://schema-registry:8081
-            APPLICATION_ID: final-join
             AUTO_OFFSET_RESET_CONFIG: earliest

@@ -1,27 +1,30 @@
 package gms.cims.bridge;
+
+import io.confluent.kafka.streams.serdes.avro.GenericAvroSerde;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 
+import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class StreamJoiner {
-    GenericRecord genericRecord;
     public void Start() {
-        Arguments.outputTopic="out4";
         Topology topology = buildTopology();
         Properties props = new Properties();
 
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, Arguments.outputTopic+"_id");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, Arguments.Broker);
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, KafkaAvroSerde.class);
-        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, KafkaAvroSerde.class);
+        props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+        props.put("schema.registry.url", Arguments.SchemaRegistry);
+        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, GenericAvroSerde.class);
 
         final KafkaStreams streams = new KafkaStreams(topology, props);
 
@@ -37,24 +40,21 @@ public class StreamJoiner {
         //ClaimStatusClaimLink: {"CL_ClaimID": 12229719, "CS_ClaimStatusID": 26711}, {"CL_ClaimID": 12229719, "CS_ClaimStatusID": 26711, "__deleted": "false"}
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, GenericRecord> ClaimStatus = builder.stream("CIMSTEST.Financial.ClaimStatus");
-        KStream<GenericRecord, GenericRecord> ClaimStatusClaimLink = builder.stream("CIMSTEST.Financial.ClaimStatusClaimLink");
-        KStream<GenericRecord, GenericRecord> ClaimContractLink = builder.stream("CIMSTEST.Financial.ClaimContractLink");
+        KStream<String, GenericRecord> CaseNoteLink = builder.stream("CIMSTEST.Financial.ClaimStatus");
+        KStream<String, GenericRecord> ClaimCase = builder.stream("CIMSTEST.Financial.ClaimStatusClaimLink");
 
-/*        KTable<Integer, GenericRecord> T_ClaimStatus = ClaimStatus.map((key, value) -> KeyValue.pair(((Integer) (key.get("CS_ClaimStatusID"))), value)).toTable();
-        KTable<Integer, GenericRecord> T_ClaimStatusClaimLink = ClaimStatusClaimLink.map((key, value) -> KeyValue.pair(((Integer) (key.get("CS_ClaimStatusID"))), value)).toTable();
-        KTable<Integer, GenericRecord> T_ClaimContractLink = ClaimContractLink.map((key, value) -> KeyValue.pair(((Integer) (key.get("CL_ClaimID"))), value)).toTable();
+        KTable<String, GenericRecord> T_CaseNoteLink = CaseNoteLink.map((key, value) -> KeyValue.pair((value.get("CS_ClaimStatusID").toString()), value)).toTable();
+        KTable<String, GenericRecord> T_ClaimCase = ClaimCase.map((key, value) -> KeyValue.pair((value.get("CS_ClaimStatusID").toString()), value)).toTable();
 
-        KTable<Integer, GenericRecord> T_ClaimStatus_ClaimStatusClaimLink= innerJoinKTable(T_ClaimStatusClaimLink,T_ClaimStatus, "ClaimStatus_ClaimStatusClaimLink");
-        KTable<Integer, GenericRecord> T_ClaimStatus_ClaimStatusClaimLink_ClaimContractLink= innerJoinKTable(T_ClaimContractLink,T_ClaimStatus_ClaimStatusClaimLink, "ClaimStatus_ClaimStatusClaimLink_ClaimContractLink");
+        KTable<String, GenericRecord> CaseNoteLink_ClaimCase = innerJoinKTable(T_CaseNoteLink, T_ClaimCase, ClaimStatus_ClaimStatusClaimLink.class);
 
-        T_ClaimStatus_ClaimStatusClaimLink_ClaimContractLink.toStream().to(Arguments.outputTopic);*/
+        CaseNoteLink_ClaimCase.toStream().to(Arguments.outputTopic);
 
         return builder.build();
     }
 
 
-    private   KTable<Integer, GenericRecord> innerJoinKTable(KTable<Integer, GenericRecord> first, KTable<Integer, GenericRecord> second, String className) {
+    private KTable<String, GenericRecord> innerJoinKTable(KTable<String, GenericRecord> first, KTable<String, GenericRecord> second, Class<?> claimClass) {
 
       return first.join(second,
                 (left,right) -> {
@@ -69,20 +69,12 @@ public class StreamJoiner {
                     });
 
                     try {
-                        switch (className) {
-                            case "ClaimStatus_ClaimStatusClaimLink":    genericRecord = objectMapper.readValue(rightJSON.toString(), ClaimStatus_ClaimStatusClaimLink.class);break;
-                            case "ClaimStatus_ClaimStatusClaimLink_ClaimContractLink":    genericRecord = objectMapper.readValue(rightJSON.toString(), ClaimStatus_ClaimStatusClaimLink_ClaimContractLink.class);break;
-                            default:  break;
-                        }
-
+                        return (GenericRecord) objectMapper.readValue(rightJSON.toString(), claimClass);
                     } catch (IOException e) {
                         e.printStackTrace();
+                        return null;
                     }
-                    return genericRecord;
                 }
         );
-
-
-
     }
 }
