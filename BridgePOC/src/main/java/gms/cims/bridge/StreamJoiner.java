@@ -40,15 +40,19 @@ public class StreamJoiner {
         //ClaimStatusClaimLink: {"CL_ClaimID": 12229719, "CS_ClaimStatusID": 26711}, {"CL_ClaimID": 12229719, "CS_ClaimStatusID": 26711, "__deleted": "false"}
         StreamsBuilder builder = new StreamsBuilder();
 
-        KStream<String, GenericRecord> CaseNoteLink = builder.stream("CIMSTEST.Financial.ClaimStatus");
-        KStream<String, GenericRecord> ClaimCase = builder.stream("CIMSTEST.Financial.ClaimStatusClaimLink");
+        KStream<String, GenericRecord> ClaimStatus = builder.stream("CIMSTEST.Financial.ClaimStatus");
+        KStream<String, GenericRecord> ClaimStatusClaimLink = builder.stream("CIMSTEST.Financial.ClaimStatusClaimLink");
+        KStream<String, GenericRecord> ClaimContractLink = builder.stream("CIMSTEST.Financial.ClaimContractLink");
 
-        KTable<String, GenericRecord> T_CaseNoteLink = CaseNoteLink.map((key, value) -> KeyValue.pair((value.get("CS_ClaimStatusID").toString()), value)).toTable();
-        KTable<String, GenericRecord> T_ClaimCase = ClaimCase.map((key, value) -> KeyValue.pair((value.get("CS_ClaimStatusID").toString()), value)).toTable();
+        KTable<String, GenericRecord> T_ClaimStatus = ClaimStatus.map((key, value) -> KeyValue.pair((value.get("CS_ClaimStatusID").toString()), value)).toTable();
+        KTable<String, GenericRecord> T_ClaimStatusClaimLink = ClaimStatusClaimLink.map((key, value) -> KeyValue.pair((value.get("CS_ClaimStatusID").toString()), value)).toTable();
+        KTable<String, GenericRecord> T_ClaimContractLink = ClaimContractLink.map((key, value) -> KeyValue.pair((value.get("CL_ClaimID").toString()), value)).toTable();
 
-        KTable<String, GenericRecord> CaseNoteLink_ClaimCase = innerJoinKTable(T_CaseNoteLink, T_ClaimCase, ClaimStatus_ClaimStatusClaimLink.class);
+        KTable<String, GenericRecord> T_ClaimStatus_ClaimStatusClaimLink= innerJoinKTable(T_ClaimStatus, T_ClaimStatusClaimLink, ClaimStatus_ClaimStatusClaimLink.class);
+        KTable<String, GenericRecord> T_ClaimStatus_ClaimStatusClaimLink_ClaimContractLink= innerJoinKTable(T_ClaimContractLink, T_ClaimStatus_ClaimStatusClaimLink, ClaimStatus_ClaimStatusClaimLink_ClaimContractLink.class);
 
-        CaseNoteLink_ClaimCase.toStream().to(Arguments.outputTopic);
+
+        T_ClaimStatus_ClaimStatusClaimLink_ClaimContractLink.toStream().to(Arguments.outputTopic);
 
         return builder.build();
     }
