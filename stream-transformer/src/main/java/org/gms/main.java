@@ -16,6 +16,7 @@ import java.util.*;
 
 public class main {
 
+    // main is entrypoint
     public static void main(String[] args) {
         SetupArguments(args);
         Topology topology = buildTopology();
@@ -27,6 +28,7 @@ public class main {
         Runtime.getRuntime().addShutdownHook(new Thread(streams::close));
     }
 
+    // configure application properties
     private static Properties buildProperties() {
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, Arguments.ApplicationID);
@@ -38,36 +40,45 @@ public class main {
         return props;
     }
 
+    // define how to transform streams in build topology
     private static Topology buildTopology() {
         StreamsBuilder builder = new StreamsBuilder();
 
         KTable<String, GenericRecord> ClaimCase_CaseNoteLink = CreateJoinedKTable(
-                "CIMSTEST.Financial.ClaimCase",
-                "CIMSTEST.Financial.CaseNoteLink",
+                new ArrayList(Arrays.asList(
+                        "CIMSTEST.Financial.ClaimCase",
+                        "CIMSTEST.Financial.CaseNoteLink"
+                )),
                 "CA_CaseID",
                 ClaimCase_ClaimNoteLink.class,
                 builder
-                );
+        );
 
         KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink = CreateJoinedKTable(
-                "CIMSTEST.Financial.ClaimStatusClaimLink",
-                "CIMSTEST.Financial.ClaimStatus",
+                new ArrayList(Arrays.asList(
+                        "CIMSTEST.Financial.ClaimStatusClaimLink",
+                        "CIMSTEST.Financial.ClaimStatus"
+                )),
                 "CS_ClaimStatusID",
                 ClaimStatus_ClaimStatusClaimLink.class,
                 builder
         );
 
         KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink = CreateJoinedKTable(
-                "CIMSTEST.Financial.Claim",
-                ClaimStatus_ClaimStatusClaimLink,
+                new ArrayList(Arrays.asList(
+                    "CIMSTEST.Financial.Claim",
+                    ClaimStatus_ClaimStatusClaimLink
+                )),
                 "CL_ClaimID",
                 Claim_ClaimStatus_ClaimStatusClaimLink.class,
                 builder
         );
 
         KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink = CreateJoinedKTable(
-                Claim_ClaimStatus_ClaimStatusClaimLink,
-                ClaimCase_CaseNoteLink,
+                new ArrayList(Arrays.asList(
+                    Claim_ClaimStatus_ClaimStatusClaimLink,
+                    ClaimCase_CaseNoteLink
+                )),
                 "CA_CaseID",
                 Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink.class,
                 builder
@@ -83,53 +94,31 @@ public class main {
         return builder.table(topic);
     }
 
-    // return KTable of 2 KTables that are left joined
-    private static KTable<String, GenericRecord> CreateJoinedKTable(Object leftTopic, Object rightTopic, String commonKey, Class<?> Class, StreamsBuilder builder) {
-
-        if (leftTopic.getClass()==String.class && rightTopic.getClass()==String.class) {
-            return LeftJoinKTables(
-                    SetCommonKey(GetKTable(builder, leftTopic.toString()), commonKey),
-                    SetCommonKey(GetKTable(builder, rightTopic.toString()), commonKey),
-                    Class
-            );
+    // return one KTable from Array of KTables that are left joined
+    private static KTable<String, GenericRecord> CreateJoinedKTable(ArrayList<Object> topics, String commonKey, Class<?> Class, StreamsBuilder builder) {
+        ArrayList<KTable<String, GenericRecord>> KeySetKTables = new ArrayList<>();
+        for (Object topic : topics) {
+            if (topic.getClass()==String.class) KeySetKTables.add(SetCommonKey(GetKTable(builder, topic.toString()), commonKey));
+            if (topic.getClass()==KTableImpl.class) KeySetKTables.add(SetCommonKey((KTable<String, GenericRecord>) topic, commonKey));
         }
 
-        if (leftTopic.getClass()==KTableImpl.class && rightTopic.getClass()==String.class) {
-            return LeftJoinKTables(
-                    SetCommonKey((KTable<String, GenericRecord>) leftTopic, commonKey),
-                    SetCommonKey(GetKTable(builder, rightTopic.toString()), commonKey),
-                    Class
-            );
-        }
-
-        if (leftTopic.getClass()==String.class && rightTopic.getClass()==KTableImpl.class) {
-            return LeftJoinKTables(
-                    SetCommonKey(GetKTable(builder, leftTopic.toString()), commonKey),
-                    SetCommonKey((KTable<String, GenericRecord>) rightTopic, commonKey),
-                    Class
-            );
-        }
-
-        if (leftTopic.getClass()==KTableImpl.class && rightTopic.getClass()==KTableImpl.class) {
-            return LeftJoinKTables(
-                    SetCommonKey((KTable<String, GenericRecord>) leftTopic, commonKey),
-                    SetCommonKey((KTable<String, GenericRecord>) rightTopic, commonKey),
-                    Class
-            );
-        }
-        return null;
+        return LeftJoinKTables(KeySetKTables, Class);
     }
 
-    // left join 2 KTables
-    private static KTable<String, GenericRecord> LeftJoinKTables(KTable<String, GenericRecord> leftKTable, KTable<String, GenericRecord> rightKTable, Class<?> Class) {
-        return leftKTable.leftJoin(rightKTable, (left, right) -> {
-            try {
-                return MergeMessages(left, right, Class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
+    // left join Array of KTables
+    private static KTable<String, GenericRecord> LeftJoinKTables(ArrayList<KTable<String, GenericRecord>> kTables, Class<?> Class) {
+        KTable<String, GenericRecord> joined = kTables.get(kTables.size()-1);
+        for (Integer i = kTables.size()-2; i >= 0; i--) {
+            joined = kTables.get(i).leftJoin(joined, (left, right) -> {
+                try {
+                    return MergeMessages(left, right, Class);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            });
+        }
+        return joined;
     }
 
     // merge 2 genericRecords and return a new genericRecord using the defined output class
@@ -167,8 +156,8 @@ public class main {
     private static void SetupArguments(String[] args) {
         Arguments.Broker = args[0];
         Arguments.SchemaRegistryURL = args[1];
-        Arguments.ApplicationID = "test-outer-join";
-        Arguments.OutputTopic = "test-outer-join";
+        Arguments.ApplicationID = args[2];
+        Arguments.OutputTopic = args[2];
         Arguments.AutoOffsetResetConfig = args[3];
     }
 }
