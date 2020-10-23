@@ -44,6 +44,12 @@ public class main {
     private static Topology buildTopology() {
         StreamsBuilder builder = new StreamsBuilder();
 
+        /*
+        create 1 KTable from array of input topics
+        the first element in the arraylist is the left-most item and gets joined last
+        specify a common key between all tables
+        provide a class based on the final schema
+        */
         KTable<String, GenericRecord> ClaimCase_CaseNoteLink = CreateJoinedKTable(
                 new ArrayList(Arrays.asList(
                         "CIMSTEST.Financial.ClaimCase",
