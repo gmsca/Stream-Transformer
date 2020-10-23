@@ -10,5 +10,5 @@ services:
         environment:
             BROKER: http://broker:29092
             SCHEMA_REGISTRY: http://schema-registry:8081
-            APPLICATION_ID: first-join
+            OUTPUT_TOPIC: test-outer-join-5
             AUTO_OFFSET_RESET_CONFIG: earliest

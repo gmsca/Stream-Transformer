@@ -8,4 +8,4 @@ WORKDIR /stream-transformer
 COPY target/stream-transformer-1.0-jar-with-dependencies.jar stream-transformer.jar
 
 # set the startup command to run your binary
-CMD java -jar stream-transformer.jar ${BROKER} ${SCHEMA_REGISTRY} ${APPLICATION_ID} ${AUTO_OFFSET_RESET_CONFIG}
+CMD java -jar stream-transformer.jar ${BROKER} ${SCHEMA_REGISTRY} ${OUTPUT_TOPIC} ${AUTO_OFFSET_RESET_CONFIG}

@@ -1,0 +1,171 @@
+{
+    "type": "record",
+    "name": "ClaimCase_ClaimNoteLink",
+    "namespace": "org.gms.claimclasses",
+    "fields": [
+        {
+            "name": "CA_CaseID",
+            "type": "int"
+        },
+        {
+            "name": "CO_ContractID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_CostEstimate",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_LimitBenDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_StatusDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "SC_CaseStatusID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_WorldAccessID",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_DepartureDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_ContactDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_VerifyDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_AdmitDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_DischargeDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_IncidentDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "IO_IndivOptionID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "IG_IndivGroupOptionID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CA_CaseType",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ClaimID",
+            "type": "int"
+        },
+        {
+            "name": "NT_NoteID",
+            "type": "int"
+        }
+    ]
+}

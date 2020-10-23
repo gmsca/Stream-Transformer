@@ -1,0 +1,492 @@
+{
+    "type": "record",
+    "name": "Claim_ClaimStatus_ClaimStatusClaimLink",
+    "namespace": "org.gms.claimclasses",
+    "fields": [
+        {
+            "name": "CL_ClaimID",
+            "type": "int"
+        },
+        {
+            "name": "CA_CaseID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "IO_IndivOptionID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "IG_IndivGroupOptionID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CV_CoverageID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_DepartureDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ProviderDesc",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ServiceEndDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ServiceStartDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "PR_ProcedureID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "TH_ToothCodeID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "PV_ProvID_ProcGuide",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_Specialist",
+            "type": "boolean"
+        },
+        {
+            "name": "CL_ProcGuideAmount",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "DG_DiagnosisID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_FeeSubmitted",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_FeeExchRate",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CR_CurrencyTypeID_Fee",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_FeeSubmittedCDN",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_DiscountAmount",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_DiscountExchRate",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CR_CurrencyTypeID_Discount",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_DiscountAmountCDN",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_DiscountPerc",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_PaidByOther",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_PaidByOtherExchRate",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CR_CurrencyTypeID_Other",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_PaidByOtherCDN",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_EligAmount",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_Deduct",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_PercPayableAmt",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_PercPayable",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_TotalOwedCDN",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_TotalOwedExchRate",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CR_CurrencyTypeID_Total",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_TotalOwed",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ProcessUser",
+            "type": "string"
+        },
+        {
+            "name": "CL_ProcessDate",
+            "type": {
+                "type": "int",
+                "connect.version": 1,
+                "connect.name": "io.debezium.time.Date"
+            }
+        },
+        {
+            "name": "CL_TotalRefunds",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CB_ClaimStateID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ClaimID_Reversed",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_RefundCheque",
+            "type": "boolean"
+        },
+        {
+            "name": "CL_HospitalWard",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_HospitalAmtPerDay",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_HospitalDays",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.type": "int16"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_HospitalTotal",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_Paid",
+            "type": "boolean"
+        },
+        {
+            "name": "CL_Reversed",
+            "type": "boolean"
+        },
+        {
+            "name": "CL_OverrideAmountCDN",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "RO_ReasonID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_OverrideText",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ProviderRef",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_SendToSecAddress",
+            "type": "boolean"
+        },
+        {
+            "name": "CL_InjuryDate",
+            "type": [
+                "null",
+                {
+                    "type": "int",
+                    "connect.version": 1,
+                    "connect.name": "io.debezium.time.Date"
+                }
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_Complete",
+            "type": "boolean"
+        },
+        {
+            "name": "VN_VoucherNoteID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_NoOfUnits",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_COBComplete",
+            "type": "boolean"
+        },
+        {
+            "name": "CL_ToothSurface",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ClaimID_Old",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ReceiveDate",
+            "type": {
+                "type": "int",
+                "connect.version": 1,
+                "connect.default": -25932,
+                "connect.name": "io.debezium.time.Date"
+            },
+            "default": -25932
+        },
+        {
+            "name": "CS_ClaimStatusID",
+            "type": "int"
+        },
+        {
+            "name": "CS_Description",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        }
+    ]
+}

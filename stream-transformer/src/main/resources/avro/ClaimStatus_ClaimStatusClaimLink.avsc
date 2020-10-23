@@ -1,0 +1,23 @@
+{
+    "type": "record",
+    "name": "ClaimStatus_ClaimStatusClaimLink",
+    "namespace": "org.gms.claimclasses",
+    "fields": [
+        {
+            "name": "CS_ClaimStatusID",
+            "type": "int"
+        },
+        {
+            "name": "CS_Description",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ClaimID",
+            "type": "int"
+        }
+    ]
+}

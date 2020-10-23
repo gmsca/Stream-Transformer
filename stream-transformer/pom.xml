@@ -30,19 +30,7 @@
             <artifactId>kafka-streams</artifactId>
             <version>6.0.0-ccs</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.kafka</groupId>
-            <artifactId>kafka-clients</artifactId>
-            <version>6.0.0-ccs</version>
-        </dependency>
         <!--STREAMS-->
-
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20190722</version>
-        </dependency>
-
         <!--AVRO-->
         <dependency>
             <groupId>org.apache.avro</groupId>
@@ -59,21 +47,17 @@
             <artifactId>kafka-streams-avro-serde</artifactId>
             <version>6.0.0</version>
         </dependency>
-
         <!--AVRO-->
-
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20190722</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
             <scope>runtime</scope>
             <version>2.13.3</version>
-        </dependency>
-
-        <!--DEBEZIUM DATE-->
-        <dependency>
-            <groupId>io.debezium</groupId>
-            <artifactId>debezium-core</artifactId>
-            <version>1.3.0.Final</version>
         </dependency>
     </dependencies>
 
@@ -91,7 +75,7 @@
                             <goal>schema</goal>
                         </goals>
                         <configuration>
-                            <sourceDirectory>${project.basedir}/src/main/resources/Avro</sourceDirectory>
+                            <sourceDirectory>${project.basedir}/src/main/resources/avro</sourceDirectory>
                             <outputDirectory>${project.basedir}/src/main/java/</outputDirectory>
                         </configuration>
                     </execution>
@@ -140,22 +124,6 @@
                                 <argument>-t</argument>
                                 <argument>stream-transformer</argument>
                                 <argument>.</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>docker-rmi-stream-transformer</id>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>docker</executable>
-                            <workingDirectory>${project.basedir}</workingDirectory>
-                            <arguments>
-                                <argument>rmi</argument>
-                                <argument>-f</argument>
-                                <argument>stream-transformer</argument>
                             </arguments>
                         </configuration>
                     </execution>
