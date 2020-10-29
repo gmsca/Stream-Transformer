@@ -1,0 +1,35 @@
+{
+    "type": "record",
+    "name": "ClaimContractLink_ClaimContractRelationships",
+    "namespace": "org.gms.claimclasses",
+    "fields": [
+        {
+            "name": "CC_RelationshipID",
+            "type": "int"
+        },
+        {
+            "name": "CC_Description",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ClaimID",
+            "type": "int"
+        },
+        {
+            "name": "CC_Relationship",
+            "type": "int"
+        },
+        {
+            "name": "CO_ContractID",
+            "type": [
+                "null",
+                "int"
+            ],
+            "default": null
+        }
+    ]
+}

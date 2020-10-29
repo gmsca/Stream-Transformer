@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import org.apache.kafka.streams.kstream.internals.KTableImpl;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class main {
 
@@ -101,13 +103,12 @@ public class main {
     }
 
     // return one KTable from Array of KTables that are left joined
-    private static KTable<String, GenericRecord> CreateJoinedKTable(ArrayList<Object> topics, String commonKey, Class<?> Class, StreamsBuilder builder) {
+    private static KTable<String, GenericRecord> CreateJoinedKTable(ArrayList<Object> topics, String regex, Class<?> Class, StreamsBuilder builder) {
         ArrayList<KTable<String, GenericRecord>> KeySetKTables = new ArrayList<>();
         for (Object topic : topics) {
-            if (topic.getClass()==String.class) KeySetKTables.add(SetCommonKey(GetKTable(builder, topic.toString()), commonKey));
-            if (topic.getClass()==KTableImpl.class) KeySetKTables.add(SetCommonKey((KTable<String, GenericRecord>) topic, commonKey));
+            if (topic.getClass()==String.class) KeySetKTables.add(SetCommonKey(GetKTable(builder, topic.toString()), regex));
+            if (topic.getClass()==KTableImpl.class) KeySetKTables.add(SetCommonKey((KTable<String, GenericRecord>) topic, regex));
         }
-
         return LeftJoinKTables(KeySetKTables, Class);
     }
 
@@ -148,14 +149,17 @@ public class main {
     }
 
     // get the key of a genericRecord
-    private static String GetKey(GenericRecord value, String commonKey) {
+    private static String GetKey(GenericRecord value, String regex) {
         if (value==null) return null;
-        return value.get(commonKey).toString();
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(value.toString());
+        if (m.find()) return value.get(m.group(0)).toString();
+        else return null;
     }
 
     // set the key of the KTable
-    private static KTable<String, GenericRecord> SetCommonKey(KTable<String, GenericRecord> kTable, String commonKey) {
-        return kTable.toStream().map((key, value) -> KeyValue.pair(GetKey(value, commonKey), value)).toTable();
+    private static KTable<String, GenericRecord> SetCommonKey(KTable<String, GenericRecord> kTable, String regex) {
+        return kTable.toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
     }
 
     // setup arguments for application

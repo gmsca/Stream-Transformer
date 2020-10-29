@@ -8,7 +8,7 @@
         "database.password": "Debetest01",
         "database.dbname": "CIMS",
         "database.server.name": "CIMSTEST",
-        "table.include.list": "Financial.ClaimCase, Financial.CaseNoteLink, Financial.ClaimStatus, Financial.ClaimStatusClaimLink, Financial.Claim",
+        "table.include.list": ".*ClaimCase, .*CaseNoteLink, .*ClaimStatus, .*ClaimStatusClaimLink, .*Claim, .*ClaimContractLink, .*ClaimContractRelationships",
         "column.exclude.list": ".*RowVersion, .*LastUpdate, .*UserID",
         "value.converter": "io.confluent.connect.avro.AvroConverter",
         "value.converter.schema.registry.url": "http://schema-registry:8081",
