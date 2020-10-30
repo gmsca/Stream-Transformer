@@ -42,15 +42,15 @@ public class main {
         return props;
     }
 
-    // define how to transform streams in build topology
+    // define how to transform input streams in build topology
     private static Topology buildTopology() {
         StreamsBuilder builder = new StreamsBuilder();
 
         /*
         create 1 KTable from array of input topics
         the first element in the arraylist is the left-most item and gets joined last
-        specify a common key between all tables
-        provide a class based on the final schema
+        specify a regex expression that will select a common key between input tables
+        provide a class based on the output schema
         */
         KTable<String, GenericRecord> ClaimCase_CaseNoteLink = CreateJoinedKTable(
                 new ArrayList(Arrays.asList(
@@ -97,11 +97,6 @@ public class main {
         return builder.build();
     }
 
-    // return KTable from topic name
-    private static KTable<String, GenericRecord> GetKTable(StreamsBuilder builder, String topic) {
-        return builder.table(topic);
-    }
-
     // return one KTable from Array of KTables that are left joined
     private static KTable<String, GenericRecord> CreateJoinedKTable(ArrayList<Object> topics, String regex, Class<?> Class, StreamsBuilder builder) {
         ArrayList<KTable<String, GenericRecord>> KeySetKTables = new ArrayList<>();
@@ -110,6 +105,25 @@ public class main {
             if (topic.getClass()==KTableImpl.class) KeySetKTables.add(SetCommonKey((KTable<String, GenericRecord>) topic, regex));
         }
         return LeftJoinKTables(KeySetKTables, Class);
+    }
+
+    // set the key of the KTable
+    private static KTable<String, GenericRecord> SetCommonKey(KTable<String, GenericRecord> kTable, String regex) {
+        return kTable.toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
+    }
+
+    // get the key of a genericRecord
+    private static String GetKey(GenericRecord value, String regex) {
+        if (value==null) return null;
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(value.toString());
+        if (m.find()) return value.get(m.group(0)).toString();
+        else return null;
+    }
+
+    // return KTable from topic name
+    private static KTable<String, GenericRecord> GetKTable(StreamsBuilder builder, String topic) {
+        return builder.table(topic);
     }
 
     // left join Array of KTables
@@ -146,20 +160,6 @@ public class main {
             }
         });
         return leftJSON.toString();
-    }
-
-    // get the key of a genericRecord
-    private static String GetKey(GenericRecord value, String regex) {
-        if (value==null) return null;
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(value.toString());
-        if (m.find()) return value.get(m.group(0)).toString();
-        else return null;
-    }
-
-    // set the key of the KTable
-    private static KTable<String, GenericRecord> SetCommonKey(KTable<String, GenericRecord> kTable, String regex) {
-        return kTable.toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
     }
 
     // setup arguments for application
