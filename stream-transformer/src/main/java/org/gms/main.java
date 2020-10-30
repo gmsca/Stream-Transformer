@@ -7,10 +7,11 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
+import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
+import org.apache.kafka.streams.kstream.internals.*;
 import org.gms.claimclasses.*;
 import org.json.JSONObject;
-import org.apache.kafka.streams.kstream.internals.KTableImpl;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -44,7 +45,6 @@ public class main {
 
     // define how to transform input streams in build topology
     private static Topology buildTopology() {
-        StreamsBuilder builder = new StreamsBuilder();
 
         /*
         create 1 KTable from array of input topics
@@ -52,64 +52,85 @@ public class main {
         specify a regex expression that will select a common key between input tables
         provide a class based on the output schema
         */
-        KTable<String, GenericRecord> ClaimCase_CaseNoteLink = CreateJoinedKTable(
+        KTable<String, GenericRecord> ClaimCase_CaseNoteLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                        "CIMSTEST.Financial.ClaimCase",
-                        "CIMSTEST.Financial.CaseNoteLink"
+                        GetKTable("CIMSTEST.Financial.ClaimCase"),
+                        GetKTable("CIMSTEST.Financial.CaseNoteLink")
                 )),
                 "CA_CaseID",
-                ClaimCase_ClaimNoteLink.class,
-                builder
+                ClaimCase_ClaimNoteLink.class
         );
 
-        KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink = CreateJoinedKTable(
+        KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                        "CIMSTEST.Financial.ClaimStatusClaimLink",
-                        "CIMSTEST.Financial.ClaimStatus"
+                        GetKTable("CIMSTEST.Financial.ClaimStatusClaimLink"),
+                        GetKTable("CIMSTEST.Financial.ClaimStatus")
                 )),
                 "CS_ClaimStatusID",
-                ClaimStatus_ClaimStatusClaimLink.class,
-                builder
+                ClaimStatus_ClaimStatusClaimLink.class
         );
 
-        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink = CreateJoinedKTable(
+        KTable<String, GenericRecord> ClaimContractLink_ClaimContractRelationships = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                    "CIMSTEST.Financial.Claim",
-                    ClaimStatus_ClaimStatusClaimLink
+                        GetKStream("CIMSTEST.Financial.ClaimContractLink"),
+                        GetKTable("CIMSTEST.Reference.ClaimContractRelationships")
+                )),
+                "CC_Relationship[ID]{0,2}",
+                ClaimContractLink_ClaimContractRelationships.class
+        );
+
+        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
+                new ArrayList(Arrays.asList(
+                        GetKTable("CIMSTEST.Financial.Claim"),
+                        ClaimStatus_ClaimStatusClaimLink
                 )),
                 "CL_ClaimID",
-                Claim_ClaimStatus_ClaimStatusClaimLink.class,
-                builder
+                Claim_ClaimStatus_ClaimStatusClaimLink.class
         );
 
-        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink = CreateJoinedKTable(
+        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                    Claim_ClaimStatus_ClaimStatusClaimLink,
-                    ClaimCase_CaseNoteLink
+                        Claim_ClaimStatus_ClaimStatusClaimLink,
+                        ClaimCase_CaseNoteLink
                 )),
                 "CA_CaseID",
-                Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink.class,
-                builder
+                Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink.class
         );
 
         Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink.toStream().to(Arguments.OutputTopic);
 
-        return builder.build();
+        /*String regex = "CC_Relationship[ID]{0,2}";
+        KStream<String, GenericRecord> ClaimContractLink = builder.stream("CIMSTEST.Financial.ClaimContractLink");
+        KStream<String, GenericRecord> ClaimContractRelationships = builder.stream("CIMSTEST.Reference.ClaimContractRelationships");
+        KStream<String, GenericRecord> ClaimContractLink_KeySet = ClaimContractLink.map((key, value) -> KeyValue.pair(GetKey(value, regex), value));
+        KTable<String, GenericRecord> ClaimContractRelationships_KeySet = ClaimContractRelationships.map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
+
+        KStream<String, GenericRecord> joined = ClaimContractLink_KeySet.leftJoin(ClaimContractRelationships_KeySet, (left, right) -> {
+            try {
+                return MergeMessages(left, right, ClaimContractLink_ClaimContractRelationships.class);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                return null;
+            }
+        });
+
+        joined.to("lookup-test");*/
+
+        return Arguments.builder.build();
     }
 
     // return one KTable from Array of KTables that are left joined
-    private static KTable<String, GenericRecord> CreateJoinedKTable(ArrayList<Object> topics, String regex, Class<?> Class, StreamsBuilder builder) {
-        ArrayList<KTable<String, GenericRecord>> KeySetKTables = new ArrayList<>();
-        for (Object topic : topics) {
-            if (topic.getClass()==String.class) KeySetKTables.add(SetCommonKey(GetKTable(builder, topic.toString()), regex));
-            if (topic.getClass()==KTableImpl.class) KeySetKTables.add(SetCommonKey((KTable<String, GenericRecord>) topic, regex));
-        }
-        return LeftJoinKTables(KeySetKTables, Class);
+    private static KTable<String, GenericRecord> LeftJoinTopics(ArrayList<Object> topics, String regex, Class<?> Class) {
+        ArrayList<Object> KeySetTopics = new ArrayList<>();
+        for (Object topic : topics) KeySetTopics.add(SetCommonKey(topic, regex));
+        return LeftJoin(KeySetTopics, Class);
     }
 
     // set the key of the KTable
-    private static KTable<String, GenericRecord> SetCommonKey(KTable<String, GenericRecord> kTable, String regex) {
-        return kTable.toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
+    private static Object SetCommonKey(Object topic, String regex) {
+        if (topic.getClass()==KTableImpl.class) return ((KTable<String, GenericRecord>) topic).toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
+        if (topic.getClass()==KStreamImpl.class) return ((KStream<String, GenericRecord>) topic).map((key, value) -> KeyValue.pair(GetKey(value, regex), value));
+        else return null;
     }
 
     // get the key of a genericRecord
@@ -122,13 +143,18 @@ public class main {
     }
 
     // return KTable from topic name
-    private static KTable<String, GenericRecord> GetKTable(StreamsBuilder builder, String topic) {
-        return builder.table(topic);
+    private static KTable<String, GenericRecord> GetKTable(String topic) {
+        return Arguments.builder.table(topic);
+    }
+
+    // return KStream from topic name
+    private static KStream<String, GenericRecord> GetKStream(String topic) {
+        return Arguments.builder.stream(topic);
     }
 
     // left join Array of KTables
-    private static KTable<String, GenericRecord> LeftJoinKTables(ArrayList<KTable<String, GenericRecord>> kTables, Class<?> Class) {
-        KTable<String, GenericRecord> joined = kTables.get(kTables.size()-1);
+    private static KTable<String, GenericRecord> LeftJoin(ArrayList<Object> topics, Class<?> Class) {
+        KTable<String, GenericRecord> joined = topics.get(topics.size()-1);
         for (Integer i = kTables.size()-2; i >= 0; i--) {
             joined = kTables.get(i).leftJoin(joined, (left, right) -> {
                 try {
