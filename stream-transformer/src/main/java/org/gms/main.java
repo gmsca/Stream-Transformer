@@ -52,7 +52,7 @@ public class main {
         specify a regex expression that will select a common key between input tables
         provide a class based on the output schema
         */
-        KTable<String, GenericRecord> ClaimCase_CaseNoteLink = LeftJoinTopics(
+        Object ClaimCase_CaseNoteLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
                         GetKTable("CIMSTEST.Financial.ClaimCase"),
                         GetKTable("CIMSTEST.Financial.CaseNoteLink")
@@ -61,7 +61,7 @@ public class main {
                 ClaimCase_ClaimNoteLink.class
         );
 
-        KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
+        Object ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
                         GetKTable("CIMSTEST.Financial.ClaimStatusClaimLink"),
                         GetKTable("CIMSTEST.Financial.ClaimStatus")
@@ -70,7 +70,7 @@ public class main {
                 ClaimStatus_ClaimStatusClaimLink.class
         );
 
-        KTable<String, GenericRecord> ClaimContractLink_ClaimContractRelationships = LeftJoinTopics(
+        Object ClaimContractLink_ClaimContractRelationships = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
                         GetKStream("CIMSTEST.Financial.ClaimContractLink"),
                         GetKTable("CIMSTEST.Reference.ClaimContractRelationships")
@@ -79,7 +79,7 @@ public class main {
                 ClaimContractLink_ClaimContractRelationships.class
         );
 
-        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
+        Object Claim_ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
                         GetKTable("CIMSTEST.Financial.Claim"),
                         ClaimStatus_ClaimStatusClaimLink
@@ -88,7 +88,7 @@ public class main {
                 Claim_ClaimStatus_ClaimStatusClaimLink.class
         );
 
-        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink = LeftJoinTopics(
+        Object Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
                         Claim_ClaimStatus_ClaimStatusClaimLink,
                         ClaimCase_CaseNoteLink
@@ -97,7 +97,7 @@ public class main {
                 Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink.class
         );
 
-        Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink.toStream().to(Arguments.OutputTopic);
+        //Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink.toStream().to(Arguments.OutputTopic);
 
         /*String regex = "CC_Relationship[ID]{0,2}";
         KStream<String, GenericRecord> ClaimContractLink = builder.stream("CIMSTEST.Financial.ClaimContractLink");
@@ -120,7 +120,7 @@ public class main {
     }
 
     // return one KTable from Array of KTables that are left joined
-    private static KTable<String, GenericRecord> LeftJoinTopics(ArrayList<Object> topics, String regex, Class<?> Class) {
+    private static Object LeftJoinTopics(ArrayList<Object> topics, String regex, Class<?> Class) {
         ArrayList<Object> KeySetTopics = new ArrayList<>();
         for (Object topic : topics) KeySetTopics.add(SetCommonKey(topic, regex));
         return LeftJoin(KeySetTopics, Class);
@@ -153,10 +153,11 @@ public class main {
     }
 
     // left join Array of KTables
-    private static KTable<String, GenericRecord> LeftJoin(ArrayList<Object> topics, Class<?> Class) {
-        KTable<String, GenericRecord> joined = topics.get(topics.size()-1);
-        for (Integer i = kTables.size()-2; i >= 0; i--) {
-            joined = kTables.get(i).leftJoin(joined, (left, right) -> {
+    private static Object LeftJoin(ArrayList<Object> topics, Class<?> Class) {
+        Object joined = topics.get(topics.size()-1);
+        for (Integer i = topics.size()-2; i >= 0; i--) {
+
+            joined = topics.get(i).leftJoin(joined, (left, right) -> {
                 try {
                     return MergeMessages(left, right, Class);
                 } catch (JsonProcessingException e) {
