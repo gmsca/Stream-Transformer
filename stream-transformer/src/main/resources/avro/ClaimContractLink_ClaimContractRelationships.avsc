@@ -4,10 +4,6 @@
     "namespace": "org.gms.claimclasses",
     "fields": [
         {
-            "name": "CC_RelationshipID",
-            "type": "int"
-        },
-        {
             "name": "CC_Description",
             "type": [
                 "null",
@@ -17,10 +13,6 @@
         },
         {
             "name": "CL_ClaimID",
-            "type": "int"
-        },
-        {
-            "name": "CC_Relationship",
             "type": "int"
         },
         {

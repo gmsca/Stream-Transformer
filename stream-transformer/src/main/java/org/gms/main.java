@@ -1,6 +1,8 @@
 package org.gms;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.confluent.kafka.streams.serdes.avro.GenericAvroSerde;
 import org.apache.avro.generic.GenericRecord;
@@ -9,13 +11,14 @@ import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.KStream;
 import org.apache.kafka.streams.kstream.KTable;
-import org.apache.kafka.streams.kstream.internals.*;
 import org.gms.claimclasses.*;
 import org.json.JSONObject;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class main {
 
@@ -52,10 +55,11 @@ public class main {
         specify a regex expression that will select a common key between input tables
         provide a class based on the output schema
         */
+
         Object ClaimCase_CaseNoteLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                        GetKTable("CIMSTEST.Financial.ClaimCase"),
-                        GetKTable("CIMSTEST.Financial.CaseNoteLink")
+                        GetKTable("CIMS.Financial.ClaimCase"),
+                        GetKTable("CIMS.Financial.CaseNoteLink")
                 )),
                 "CA_CaseID",
                 ClaimCase_ClaimNoteLink.class
@@ -63,8 +67,8 @@ public class main {
 
         Object ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                        GetKTable("CIMSTEST.Financial.ClaimStatusClaimLink"),
-                        GetKTable("CIMSTEST.Financial.ClaimStatus")
+                        GetKTable("CIMS.Financial.ClaimStatusClaimLink"),
+                        GetKTable("CIMS.Financial.ClaimStatus")
                 )),
                 "CS_ClaimStatusID",
                 ClaimStatus_ClaimStatusClaimLink.class
@@ -72,8 +76,8 @@ public class main {
 
         Object ClaimContractLink_ClaimContractRelationships = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                        GetKStream("CIMSTEST.Financial.ClaimContractLink"),
-                        GetKTable("CIMSTEST.Reference.ClaimContractRelationships")
+                        GetKStream("CIMS.Financial.ClaimContractLink"),
+                        GetKTable("CIMS.Reference.ClaimContractRelationships")
                 )),
                 "CC_Relationship[ID]{0,2}",
                 ClaimContractLink_ClaimContractRelationships.class
@@ -81,7 +85,7 @@ public class main {
 
         Object Claim_ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
                 new ArrayList(Arrays.asList(
-                        GetKTable("CIMSTEST.Financial.Claim"),
+                        GetKTable("CIMS.Financial.Claim"),
                         ClaimStatus_ClaimStatusClaimLink
                 )),
                 "CL_ClaimID",
@@ -97,24 +101,16 @@ public class main {
                 Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink.class
         );
 
-        //Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink.toStream().to(Arguments.OutputTopic);
+        Object Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships = LeftJoinTopics(
+                new ArrayList(Arrays.asList(
+                        Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink,
+                        ((KStream) ClaimContractLink_ClaimContractRelationships).toTable()
+                )),
+                "CL_ClaimID",
+                Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.class
+        );
 
-        /*String regex = "CC_Relationship[ID]{0,2}";
-        KStream<String, GenericRecord> ClaimContractLink = builder.stream("CIMSTEST.Financial.ClaimContractLink");
-        KStream<String, GenericRecord> ClaimContractRelationships = builder.stream("CIMSTEST.Reference.ClaimContractRelationships");
-        KStream<String, GenericRecord> ClaimContractLink_KeySet = ClaimContractLink.map((key, value) -> KeyValue.pair(GetKey(value, regex), value));
-        KTable<String, GenericRecord> ClaimContractRelationships_KeySet = ClaimContractRelationships.map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
-
-        KStream<String, GenericRecord> joined = ClaimContractLink_KeySet.leftJoin(ClaimContractRelationships_KeySet, (left, right) -> {
-            try {
-                return MergeMessages(left, right, ClaimContractLink_ClaimContractRelationships.class);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                return null;
-            }
-        });
-
-        joined.to("lookup-test");*/
+        ((KTable) Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships).toStream().to(Arguments.OutputTopic);
 
         return Arguments.builder.build();
     }
@@ -128,14 +124,16 @@ public class main {
 
     // set the key of the KTable
     private static Object SetCommonKey(Object topic, String regex) {
-        if (topic.getClass()==KTableImpl.class) return ((KTable<String, GenericRecord>) topic).toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
-        if (topic.getClass()==KStreamImpl.class) return ((KStream<String, GenericRecord>) topic).map((key, value) -> KeyValue.pair(GetKey(value, regex), value));
+        if (topic instanceof KTable) return ((KTable<String, GenericRecord>) topic).toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
+        if (topic instanceof KStream) return ((KStream<String, GenericRecord>) topic).map((key, value) -> KeyValue.pair(GetKey(value, regex), value));
         else return null;
     }
 
     // get the key of a genericRecord
     private static String GetKey(GenericRecord value, String regex) {
-        if (value==null) return null;
+        if (value==null){
+            return null;
+        }
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(value.toString());
         if (m.find()) return value.get(m.group(0)).toString();
@@ -154,10 +152,9 @@ public class main {
 
     // left join Array of KTables
     private static Object LeftJoin(ArrayList<Object> topics, Class<?> Class) {
-        Object joined = topics.get(topics.size()-1);
-        for (Integer i = topics.size()-2; i >= 0; i--) {
-
-            joined = topics.get(i).leftJoin(joined, (left, right) -> {
+        KTable<String, GenericRecord> rightTopic = (KTable<String, GenericRecord>) topics.get(1);
+        if (topics.get(0) instanceof KStream) {
+            return ((KStream<String, GenericRecord>) topics.get(0)).leftJoin(rightTopic, (left, right) -> {
                 try {
                     return MergeMessages(left, right, Class);
                 } catch (JsonProcessingException e) {
@@ -166,13 +163,23 @@ public class main {
                 }
             });
         }
-        return joined;
+        if (topics.get(0) instanceof KTable) {
+            return ((KTable<String, GenericRecord>) topics.get(0)).leftJoin(rightTopic, (left, right) -> {
+                try {
+                    return MergeMessages(left, right, Class);
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            });
+        }
+        return null;
     }
 
     // merge 2 genericRecords and return a new genericRecord using the defined output class
     private static GenericRecord MergeMessages(GenericRecord left, GenericRecord right, Class<?> Class) throws JsonProcessingException {
         String mergedValues = MergeValues(left, right);
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return (GenericRecord) objectMapper.readValue(mergedValues, Class);
     }
 

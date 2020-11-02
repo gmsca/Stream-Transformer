@@ -629,14 +629,6 @@
             "type": "int"
         },
         {
-            "name": "CC_Relationship",
-            "type": "int"
-        },
-        {
-            "name": "CC_RelationshipID",
-            "type": "int"
-        },
-        {
             "name": "CC_Description",
             "type": [
                 "null",

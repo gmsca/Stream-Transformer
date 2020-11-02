@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -4924706749963310552L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships\",\"namespace\":\"org.gms.claimclasses\",\"fields\":[{\"name\":\"CL_ClaimID\",\"type\":\"int\"},{\"name\":\"CA_CaseID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"IO_IndivOptionID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"IG_IndivGroupOptionID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CV_CoverageID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_DepartureDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CL_ProviderDesc\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ServiceEndDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CL_ServiceStartDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"PR_ProcedureID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"TH_ToothCodeID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"PV_ProvID_ProcGuide\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_Specialist\",\"type\":\"boolean\"},{\"name\":\"CL_ProcGuideAmount\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"DG_DiagnosisID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_FeeSubmitted\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_FeeExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Fee\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_FeeSubmittedCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_DiscountAmount\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_DiscountExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Discount\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_DiscountAmountCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_DiscountPerc\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PaidByOther\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PaidByOtherExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Other\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_PaidByOtherCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_EligAmount\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_Deduct\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PercPayableAmt\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PercPayable\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_TotalOwedCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_TotalOwedExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Total\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_TotalOwed\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_ProcessUser\",\"type\":\"string\"},{\"name\":\"CL_ProcessDate\",\"type\":{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}},{\"name\":\"CL_TotalRefunds\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CB_ClaimStateID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_ClaimID_Reversed\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_RefundCheque\",\"type\":\"boolean\"},{\"name\":\"CL_HospitalWard\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_HospitalAmtPerDay\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_HospitalDays\",\"type\":[\"null\",{\"type\":\"int\",\"connect.type\":\"int16\"}],\"default\":null},{\"name\":\"CL_HospitalTotal\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_Paid\",\"type\":\"boolean\"},{\"name\":\"CL_Reversed\",\"type\":\"boolean\"},{\"name\":\"CL_OverrideAmountCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"RO_ReasonID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_OverrideText\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ProviderRef\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_SendToSecAddress\",\"type\":\"boolean\"},{\"name\":\"CL_InjuryDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CL_Complete\",\"type\":\"boolean\"},{\"name\":\"VN_VoucherNoteID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_NoOfUnits\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_COBComplete\",\"type\":\"boolean\"},{\"name\":\"CL_ToothSurface\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ClaimID_Old\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_ReceiveDate\",\"type\":{\"type\":\"int\",\"connect.version\":1,\"connect.default\":-25932,\"connect.name\":\"io.debezium.time.Date\"},\"default\":-25932},{\"name\":\"CS_ClaimStatusID\",\"type\":\"int\"},{\"name\":\"CS_Description\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CO_ContractID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CA_CostEstimate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CA_LimitBenDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_StatusDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"SC_CaseStatusID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CA_WorldAccessID\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CA_DepartureDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_ContactDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_VerifyDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_AdmitDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_DischargeDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_IncidentDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_CaseType\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"NT_NoteID\",\"type\":\"int\"},{\"name\":\"CC_Relationship\",\"type\":\"int\"},{\"name\":\"CC_RelationshipID\",\"type\":\"int\"},{\"name\":\"CC_Description\",\"type\":[\"null\",\"string\"],\"default\":null}]}");
+  private static final long serialVersionUID = -204375090799667188L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships\",\"namespace\":\"org.gms.claimclasses\",\"fields\":[{\"name\":\"CL_ClaimID\",\"type\":\"int\"},{\"name\":\"CA_CaseID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"IO_IndivOptionID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"IG_IndivGroupOptionID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CV_CoverageID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_DepartureDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CL_ProviderDesc\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ServiceEndDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CL_ServiceStartDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"PR_ProcedureID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"TH_ToothCodeID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"PV_ProvID_ProcGuide\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_Specialist\",\"type\":\"boolean\"},{\"name\":\"CL_ProcGuideAmount\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"DG_DiagnosisID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_FeeSubmitted\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_FeeExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Fee\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_FeeSubmittedCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_DiscountAmount\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_DiscountExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Discount\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_DiscountAmountCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_DiscountPerc\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PaidByOther\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PaidByOtherExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Other\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_PaidByOtherCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_EligAmount\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_Deduct\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PercPayableAmt\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_PercPayable\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_TotalOwedCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_TotalOwedExchRate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CR_CurrencyTypeID_Total\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_TotalOwed\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_ProcessUser\",\"type\":\"string\"},{\"name\":\"CL_ProcessDate\",\"type\":{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}},{\"name\":\"CL_TotalRefunds\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CB_ClaimStateID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_ClaimID_Reversed\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_RefundCheque\",\"type\":\"boolean\"},{\"name\":\"CL_HospitalWard\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_HospitalAmtPerDay\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_HospitalDays\",\"type\":[\"null\",{\"type\":\"int\",\"connect.type\":\"int16\"}],\"default\":null},{\"name\":\"CL_HospitalTotal\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CL_Paid\",\"type\":\"boolean\"},{\"name\":\"CL_Reversed\",\"type\":\"boolean\"},{\"name\":\"CL_OverrideAmountCDN\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"RO_ReasonID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_OverrideText\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ProviderRef\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_SendToSecAddress\",\"type\":\"boolean\"},{\"name\":\"CL_InjuryDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CL_Complete\",\"type\":\"boolean\"},{\"name\":\"VN_VoucherNoteID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_NoOfUnits\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_COBComplete\",\"type\":\"boolean\"},{\"name\":\"CL_ToothSurface\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ClaimID_Old\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CL_ReceiveDate\",\"type\":{\"type\":\"int\",\"connect.version\":1,\"connect.default\":-25932,\"connect.name\":\"io.debezium.time.Date\"},\"default\":-25932},{\"name\":\"CS_ClaimStatusID\",\"type\":\"int\"},{\"name\":\"CS_Description\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CO_ContractID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CA_CostEstimate\",\"type\":[\"null\",\"double\"],\"default\":null},{\"name\":\"CA_LimitBenDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_StatusDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"SC_CaseStatusID\",\"type\":[\"null\",\"int\"],\"default\":null},{\"name\":\"CA_WorldAccessID\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CA_DepartureDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_ContactDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_VerifyDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_AdmitDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_DischargeDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_IncidentDate\",\"type\":[\"null\",{\"type\":\"int\",\"connect.version\":1,\"connect.name\":\"io.debezium.time.Date\"}],\"default\":null},{\"name\":\"CA_CaseType\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"NT_NoteID\",\"type\":\"int\"},{\"name\":\"CC_Description\",\"type\":[\"null\",\"string\"],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -128,8 +128,6 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
   @Deprecated public java.lang.Integer CA_IncidentDate;
   @Deprecated public java.lang.CharSequence CA_CaseType;
   @Deprecated public int NT_NoteID;
-  @Deprecated public int CC_Relationship;
-  @Deprecated public int CC_RelationshipID;
   @Deprecated public java.lang.CharSequence CC_Description;
 
   /**
@@ -218,11 +216,9 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
    * @param CA_IncidentDate The new value for CA_IncidentDate
    * @param CA_CaseType The new value for CA_CaseType
    * @param NT_NoteID The new value for NT_NoteID
-   * @param CC_Relationship The new value for CC_Relationship
-   * @param CC_RelationshipID The new value for CC_RelationshipID
    * @param CC_Description The new value for CC_Description
    */
-  public Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships(java.lang.Integer CL_ClaimID, java.lang.Integer CA_CaseID, java.lang.Integer IO_IndivOptionID, java.lang.Integer IG_IndivGroupOptionID, java.lang.Integer CV_CoverageID, java.lang.Integer CL_DepartureDate, java.lang.CharSequence CL_ProviderDesc, java.lang.Integer CL_ServiceEndDate, java.lang.Integer CL_ServiceStartDate, java.lang.Integer PR_ProcedureID, java.lang.Integer TH_ToothCodeID, java.lang.Integer PV_ProvID_ProcGuide, java.lang.Boolean CL_Specialist, java.lang.Double CL_ProcGuideAmount, java.lang.Integer DG_DiagnosisID, java.lang.Double CL_FeeSubmitted, java.lang.Double CL_FeeExchRate, java.lang.Integer CR_CurrencyTypeID_Fee, java.lang.Double CL_FeeSubmittedCDN, java.lang.Double CL_DiscountAmount, java.lang.Double CL_DiscountExchRate, java.lang.Integer CR_CurrencyTypeID_Discount, java.lang.Double CL_DiscountAmountCDN, java.lang.Double CL_DiscountPerc, java.lang.Double CL_PaidByOther, java.lang.Double CL_PaidByOtherExchRate, java.lang.Integer CR_CurrencyTypeID_Other, java.lang.Double CL_PaidByOtherCDN, java.lang.Double CL_EligAmount, java.lang.Double CL_Deduct, java.lang.Double CL_PercPayableAmt, java.lang.Double CL_PercPayable, java.lang.Double CL_TotalOwedCDN, java.lang.Double CL_TotalOwedExchRate, java.lang.Integer CR_CurrencyTypeID_Total, java.lang.Double CL_TotalOwed, java.lang.CharSequence CL_ProcessUser, java.lang.Integer CL_ProcessDate, java.lang.Double CL_TotalRefunds, java.lang.Integer CB_ClaimStateID, java.lang.Integer CL_ClaimID_Reversed, java.lang.Boolean CL_RefundCheque, java.lang.CharSequence CL_HospitalWard, java.lang.Double CL_HospitalAmtPerDay, java.lang.Integer CL_HospitalDays, java.lang.Double CL_HospitalTotal, java.lang.Boolean CL_Paid, java.lang.Boolean CL_Reversed, java.lang.Double CL_OverrideAmountCDN, java.lang.Integer RO_ReasonID, java.lang.CharSequence CL_OverrideText, java.lang.CharSequence CL_ProviderRef, java.lang.Boolean CL_SendToSecAddress, java.lang.Integer CL_InjuryDate, java.lang.Boolean CL_Complete, java.lang.Integer VN_VoucherNoteID, java.lang.Integer CL_NoOfUnits, java.lang.Boolean CL_COBComplete, java.lang.CharSequence CL_ToothSurface, java.lang.Integer CL_ClaimID_Old, java.lang.Integer CL_ReceiveDate, java.lang.Integer CS_ClaimStatusID, java.lang.CharSequence CS_Description, java.lang.Integer CO_ContractID, java.lang.Double CA_CostEstimate, java.lang.Integer CA_LimitBenDate, java.lang.Integer CA_StatusDate, java.lang.Integer SC_CaseStatusID, java.lang.CharSequence CA_WorldAccessID, java.lang.Integer CA_DepartureDate, java.lang.Integer CA_ContactDate, java.lang.Integer CA_VerifyDate, java.lang.Integer CA_AdmitDate, java.lang.Integer CA_DischargeDate, java.lang.Integer CA_IncidentDate, java.lang.CharSequence CA_CaseType, java.lang.Integer NT_NoteID, java.lang.Integer CC_Relationship, java.lang.Integer CC_RelationshipID, java.lang.CharSequence CC_Description) {
+  public Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships(java.lang.Integer CL_ClaimID, java.lang.Integer CA_CaseID, java.lang.Integer IO_IndivOptionID, java.lang.Integer IG_IndivGroupOptionID, java.lang.Integer CV_CoverageID, java.lang.Integer CL_DepartureDate, java.lang.CharSequence CL_ProviderDesc, java.lang.Integer CL_ServiceEndDate, java.lang.Integer CL_ServiceStartDate, java.lang.Integer PR_ProcedureID, java.lang.Integer TH_ToothCodeID, java.lang.Integer PV_ProvID_ProcGuide, java.lang.Boolean CL_Specialist, java.lang.Double CL_ProcGuideAmount, java.lang.Integer DG_DiagnosisID, java.lang.Double CL_FeeSubmitted, java.lang.Double CL_FeeExchRate, java.lang.Integer CR_CurrencyTypeID_Fee, java.lang.Double CL_FeeSubmittedCDN, java.lang.Double CL_DiscountAmount, java.lang.Double CL_DiscountExchRate, java.lang.Integer CR_CurrencyTypeID_Discount, java.lang.Double CL_DiscountAmountCDN, java.lang.Double CL_DiscountPerc, java.lang.Double CL_PaidByOther, java.lang.Double CL_PaidByOtherExchRate, java.lang.Integer CR_CurrencyTypeID_Other, java.lang.Double CL_PaidByOtherCDN, java.lang.Double CL_EligAmount, java.lang.Double CL_Deduct, java.lang.Double CL_PercPayableAmt, java.lang.Double CL_PercPayable, java.lang.Double CL_TotalOwedCDN, java.lang.Double CL_TotalOwedExchRate, java.lang.Integer CR_CurrencyTypeID_Total, java.lang.Double CL_TotalOwed, java.lang.CharSequence CL_ProcessUser, java.lang.Integer CL_ProcessDate, java.lang.Double CL_TotalRefunds, java.lang.Integer CB_ClaimStateID, java.lang.Integer CL_ClaimID_Reversed, java.lang.Boolean CL_RefundCheque, java.lang.CharSequence CL_HospitalWard, java.lang.Double CL_HospitalAmtPerDay, java.lang.Integer CL_HospitalDays, java.lang.Double CL_HospitalTotal, java.lang.Boolean CL_Paid, java.lang.Boolean CL_Reversed, java.lang.Double CL_OverrideAmountCDN, java.lang.Integer RO_ReasonID, java.lang.CharSequence CL_OverrideText, java.lang.CharSequence CL_ProviderRef, java.lang.Boolean CL_SendToSecAddress, java.lang.Integer CL_InjuryDate, java.lang.Boolean CL_Complete, java.lang.Integer VN_VoucherNoteID, java.lang.Integer CL_NoOfUnits, java.lang.Boolean CL_COBComplete, java.lang.CharSequence CL_ToothSurface, java.lang.Integer CL_ClaimID_Old, java.lang.Integer CL_ReceiveDate, java.lang.Integer CS_ClaimStatusID, java.lang.CharSequence CS_Description, java.lang.Integer CO_ContractID, java.lang.Double CA_CostEstimate, java.lang.Integer CA_LimitBenDate, java.lang.Integer CA_StatusDate, java.lang.Integer SC_CaseStatusID, java.lang.CharSequence CA_WorldAccessID, java.lang.Integer CA_DepartureDate, java.lang.Integer CA_ContactDate, java.lang.Integer CA_VerifyDate, java.lang.Integer CA_AdmitDate, java.lang.Integer CA_DischargeDate, java.lang.Integer CA_IncidentDate, java.lang.CharSequence CA_CaseType, java.lang.Integer NT_NoteID, java.lang.CharSequence CC_Description) {
     this.CL_ClaimID = CL_ClaimID;
     this.CA_CaseID = CA_CaseID;
     this.IO_IndivOptionID = IO_IndivOptionID;
@@ -300,8 +296,6 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
     this.CA_IncidentDate = CA_IncidentDate;
     this.CA_CaseType = CA_CaseType;
     this.NT_NoteID = NT_NoteID;
-    this.CC_Relationship = CC_Relationship;
-    this.CC_RelationshipID = CC_RelationshipID;
     this.CC_Description = CC_Description;
   }
 
@@ -386,9 +380,7 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
     case 74: return CA_IncidentDate;
     case 75: return CA_CaseType;
     case 76: return NT_NoteID;
-    case 77: return CC_Relationship;
-    case 78: return CC_RelationshipID;
-    case 79: return CC_Description;
+    case 77: return CC_Description;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -474,9 +466,7 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
     case 74: CA_IncidentDate = (java.lang.Integer)value$; break;
     case 75: CA_CaseType = (java.lang.CharSequence)value$; break;
     case 76: NT_NoteID = (java.lang.Integer)value$; break;
-    case 77: CC_Relationship = (java.lang.Integer)value$; break;
-    case 78: CC_RelationshipID = (java.lang.Integer)value$; break;
-    case 79: CC_Description = (java.lang.CharSequence)value$; break;
+    case 77: CC_Description = (java.lang.CharSequence)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -1714,38 +1704,6 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
   }
 
   /**
-   * Gets the value of the 'CC_Relationship' field.
-   * @return The value of the 'CC_Relationship' field.
-   */
-  public java.lang.Integer getCCRelationship() {
-    return CC_Relationship;
-  }
-
-  /**
-   * Sets the value of the 'CC_Relationship' field.
-   * @param value the value to set.
-   */
-  public void setCCRelationship(java.lang.Integer value) {
-    this.CC_Relationship = value;
-  }
-
-  /**
-   * Gets the value of the 'CC_RelationshipID' field.
-   * @return The value of the 'CC_RelationshipID' field.
-   */
-  public java.lang.Integer getCCRelationshipID() {
-    return CC_RelationshipID;
-  }
-
-  /**
-   * Sets the value of the 'CC_RelationshipID' field.
-   * @param value the value to set.
-   */
-  public void setCCRelationshipID(java.lang.Integer value) {
-    this.CC_RelationshipID = value;
-  }
-
-  /**
    * Gets the value of the 'CC_Description' field.
    * @return The value of the 'CC_Description' field.
    */
@@ -1870,8 +1828,6 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
     private java.lang.Integer CA_IncidentDate;
     private java.lang.CharSequence CA_CaseType;
     private int NT_NoteID;
-    private int CC_Relationship;
-    private int CC_RelationshipID;
     private java.lang.CharSequence CC_Description;
 
     /** Creates a new Builder */
@@ -2193,17 +2149,9 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
         this.NT_NoteID = data().deepCopy(fields()[76].schema(), other.NT_NoteID);
         fieldSetFlags()[76] = true;
       }
-      if (isValidValue(fields()[77], other.CC_Relationship)) {
-        this.CC_Relationship = data().deepCopy(fields()[77].schema(), other.CC_Relationship);
+      if (isValidValue(fields()[77], other.CC_Description)) {
+        this.CC_Description = data().deepCopy(fields()[77].schema(), other.CC_Description);
         fieldSetFlags()[77] = true;
-      }
-      if (isValidValue(fields()[78], other.CC_RelationshipID)) {
-        this.CC_RelationshipID = data().deepCopy(fields()[78].schema(), other.CC_RelationshipID);
-        fieldSetFlags()[78] = true;
-      }
-      if (isValidValue(fields()[79], other.CC_Description)) {
-        this.CC_Description = data().deepCopy(fields()[79].schema(), other.CC_Description);
-        fieldSetFlags()[79] = true;
       }
     }
 
@@ -2521,17 +2469,9 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
         this.NT_NoteID = data().deepCopy(fields()[76].schema(), other.NT_NoteID);
         fieldSetFlags()[76] = true;
       }
-      if (isValidValue(fields()[77], other.CC_Relationship)) {
-        this.CC_Relationship = data().deepCopy(fields()[77].schema(), other.CC_Relationship);
+      if (isValidValue(fields()[77], other.CC_Description)) {
+        this.CC_Description = data().deepCopy(fields()[77].schema(), other.CC_Description);
         fieldSetFlags()[77] = true;
-      }
-      if (isValidValue(fields()[78], other.CC_RelationshipID)) {
-        this.CC_RelationshipID = data().deepCopy(fields()[78].schema(), other.CC_RelationshipID);
-        fieldSetFlags()[78] = true;
-      }
-      if (isValidValue(fields()[79], other.CC_Description)) {
-        this.CC_Description = data().deepCopy(fields()[79].schema(), other.CC_Description);
-        fieldSetFlags()[79] = true;
       }
     }
 
@@ -5527,82 +5467,6 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
     }
 
     /**
-      * Gets the value of the 'CC_Relationship' field.
-      * @return The value.
-      */
-    public java.lang.Integer getCCRelationship() {
-      return CC_Relationship;
-    }
-
-    /**
-      * Sets the value of the 'CC_Relationship' field.
-      * @param value The value of 'CC_Relationship'.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.Builder setCCRelationship(int value) {
-      validate(fields()[77], value);
-      this.CC_Relationship = value;
-      fieldSetFlags()[77] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'CC_Relationship' field has been set.
-      * @return True if the 'CC_Relationship' field has been set, false otherwise.
-      */
-    public boolean hasCCRelationship() {
-      return fieldSetFlags()[77];
-    }
-
-
-    /**
-      * Clears the value of the 'CC_Relationship' field.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.Builder clearCCRelationship() {
-      fieldSetFlags()[77] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'CC_RelationshipID' field.
-      * @return The value.
-      */
-    public java.lang.Integer getCCRelationshipID() {
-      return CC_RelationshipID;
-    }
-
-    /**
-      * Sets the value of the 'CC_RelationshipID' field.
-      * @param value The value of 'CC_RelationshipID'.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.Builder setCCRelationshipID(int value) {
-      validate(fields()[78], value);
-      this.CC_RelationshipID = value;
-      fieldSetFlags()[78] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'CC_RelationshipID' field has been set.
-      * @return True if the 'CC_RelationshipID' field has been set, false otherwise.
-      */
-    public boolean hasCCRelationshipID() {
-      return fieldSetFlags()[78];
-    }
-
-
-    /**
-      * Clears the value of the 'CC_RelationshipID' field.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.Builder clearCCRelationshipID() {
-      fieldSetFlags()[78] = false;
-      return this;
-    }
-
-    /**
       * Gets the value of the 'CC_Description' field.
       * @return The value.
       */
@@ -5616,9 +5480,9 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
       * @return This builder.
       */
     public org.gms.claimclasses.Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.Builder setCCDescription(java.lang.CharSequence value) {
-      validate(fields()[79], value);
+      validate(fields()[77], value);
       this.CC_Description = value;
-      fieldSetFlags()[79] = true;
+      fieldSetFlags()[77] = true;
       return this;
     }
 
@@ -5627,7 +5491,7 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
       * @return True if the 'CC_Description' field has been set, false otherwise.
       */
     public boolean hasCCDescription() {
-      return fieldSetFlags()[79];
+      return fieldSetFlags()[77];
     }
 
 
@@ -5637,7 +5501,7 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
       */
     public org.gms.claimclasses.Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.Builder clearCCDescription() {
       CC_Description = null;
-      fieldSetFlags()[79] = false;
+      fieldSetFlags()[77] = false;
       return this;
     }
 
@@ -5723,9 +5587,7 @@ public class Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_Clai
         record.CA_IncidentDate = fieldSetFlags()[74] ? this.CA_IncidentDate : (java.lang.Integer) defaultValue(fields()[74]);
         record.CA_CaseType = fieldSetFlags()[75] ? this.CA_CaseType : (java.lang.CharSequence) defaultValue(fields()[75]);
         record.NT_NoteID = fieldSetFlags()[76] ? this.NT_NoteID : (java.lang.Integer) defaultValue(fields()[76]);
-        record.CC_Relationship = fieldSetFlags()[77] ? this.CC_Relationship : (java.lang.Integer) defaultValue(fields()[77]);
-        record.CC_RelationshipID = fieldSetFlags()[78] ? this.CC_RelationshipID : (java.lang.Integer) defaultValue(fields()[78]);
-        record.CC_Description = fieldSetFlags()[79] ? this.CC_Description : (java.lang.CharSequence) defaultValue(fields()[79]);
+        record.CC_Description = fieldSetFlags()[77] ? this.CC_Description : (java.lang.CharSequence) defaultValue(fields()[77]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);

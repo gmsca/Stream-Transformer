@@ -7,7 +7,7 @@
         "database.user": "debezium",
         "database.password": "Debetest01",
         "database.dbname": "CIMS",
-        "database.server.name": "CIMSTEST",
+        "database.server.name": "CIMS",
         "table.include.list": ".*ClaimCase, .*CaseNoteLink, .*ClaimStatus, .*ClaimStatusClaimLink, .*Claim, .*ClaimContractLink, .*ClaimContractRelationships",
         "column.exclude.list": ".*RowVersion, .*LastUpdate, .*UserID",
         "value.converter": "io.confluent.connect.avro.AvroConverter",

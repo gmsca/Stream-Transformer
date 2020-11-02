@@ -13,8 +13,8 @@ import org.apache.avro.message.SchemaStore;
 @SuppressWarnings("all")
 @org.apache.avro.specific.AvroGenerated
 public class ClaimContractLink_ClaimContractRelationships extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 4618438597802111552L;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ClaimContractLink_ClaimContractRelationships\",\"namespace\":\"org.gms.claimclasses\",\"fields\":[{\"name\":\"CC_RelationshipID\",\"type\":\"int\"},{\"name\":\"CC_Description\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ClaimID\",\"type\":\"int\"},{\"name\":\"CC_Relationship\",\"type\":\"int\"},{\"name\":\"CO_ContractID\",\"type\":[\"null\",\"int\"],\"default\":null}]}");
+  private static final long serialVersionUID = 1806948805857498368L;
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"ClaimContractLink_ClaimContractRelationships\",\"namespace\":\"org.gms.claimclasses\",\"fields\":[{\"name\":\"CC_Description\",\"type\":[\"null\",\"string\"],\"default\":null},{\"name\":\"CL_ClaimID\",\"type\":\"int\"},{\"name\":\"CO_ContractID\",\"type\":[\"null\",\"int\"],\"default\":null}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static SpecificData MODEL$ = new SpecificData();
@@ -51,10 +51,8 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
     return DECODER.decode(b);
   }
 
-  @Deprecated public int CC_RelationshipID;
   @Deprecated public java.lang.CharSequence CC_Description;
   @Deprecated public int CL_ClaimID;
-  @Deprecated public int CC_Relationship;
   @Deprecated public java.lang.Integer CO_ContractID;
 
   /**
@@ -66,17 +64,13 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
 
   /**
    * All-args constructor.
-   * @param CC_RelationshipID The new value for CC_RelationshipID
    * @param CC_Description The new value for CC_Description
    * @param CL_ClaimID The new value for CL_ClaimID
-   * @param CC_Relationship The new value for CC_Relationship
    * @param CO_ContractID The new value for CO_ContractID
    */
-  public ClaimContractLink_ClaimContractRelationships(java.lang.Integer CC_RelationshipID, java.lang.CharSequence CC_Description, java.lang.Integer CL_ClaimID, java.lang.Integer CC_Relationship, java.lang.Integer CO_ContractID) {
-    this.CC_RelationshipID = CC_RelationshipID;
+  public ClaimContractLink_ClaimContractRelationships(java.lang.CharSequence CC_Description, java.lang.Integer CL_ClaimID, java.lang.Integer CO_ContractID) {
     this.CC_Description = CC_Description;
     this.CL_ClaimID = CL_ClaimID;
-    this.CC_Relationship = CC_Relationship;
     this.CO_ContractID = CO_ContractID;
   }
 
@@ -84,11 +78,9 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
   // Used by DatumWriter.  Applications should not call.
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return CC_RelationshipID;
-    case 1: return CC_Description;
-    case 2: return CL_ClaimID;
-    case 3: return CC_Relationship;
-    case 4: return CO_ContractID;
+    case 0: return CC_Description;
+    case 1: return CL_ClaimID;
+    case 2: return CO_ContractID;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
   }
@@ -97,29 +89,11 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: CC_RelationshipID = (java.lang.Integer)value$; break;
-    case 1: CC_Description = (java.lang.CharSequence)value$; break;
-    case 2: CL_ClaimID = (java.lang.Integer)value$; break;
-    case 3: CC_Relationship = (java.lang.Integer)value$; break;
-    case 4: CO_ContractID = (java.lang.Integer)value$; break;
+    case 0: CC_Description = (java.lang.CharSequence)value$; break;
+    case 1: CL_ClaimID = (java.lang.Integer)value$; break;
+    case 2: CO_ContractID = (java.lang.Integer)value$; break;
     default: throw new org.apache.avro.AvroRuntimeException("Bad index");
     }
-  }
-
-  /**
-   * Gets the value of the 'CC_RelationshipID' field.
-   * @return The value of the 'CC_RelationshipID' field.
-   */
-  public java.lang.Integer getCCRelationshipID() {
-    return CC_RelationshipID;
-  }
-
-  /**
-   * Sets the value of the 'CC_RelationshipID' field.
-   * @param value the value to set.
-   */
-  public void setCCRelationshipID(java.lang.Integer value) {
-    this.CC_RelationshipID = value;
   }
 
   /**
@@ -152,22 +126,6 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
    */
   public void setCLClaimID(java.lang.Integer value) {
     this.CL_ClaimID = value;
-  }
-
-  /**
-   * Gets the value of the 'CC_Relationship' field.
-   * @return The value of the 'CC_Relationship' field.
-   */
-  public java.lang.Integer getCCRelationship() {
-    return CC_Relationship;
-  }
-
-  /**
-   * Sets the value of the 'CC_Relationship' field.
-   * @param value the value to set.
-   */
-  public void setCCRelationship(java.lang.Integer value) {
-    this.CC_Relationship = value;
   }
 
   /**
@@ -218,10 +176,8 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
   public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<ClaimContractLink_ClaimContractRelationships>
     implements org.apache.avro.data.RecordBuilder<ClaimContractLink_ClaimContractRelationships> {
 
-    private int CC_RelationshipID;
     private java.lang.CharSequence CC_Description;
     private int CL_ClaimID;
-    private int CC_Relationship;
     private java.lang.Integer CO_ContractID;
 
     /** Creates a new Builder */
@@ -235,25 +191,17 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
      */
     private Builder(org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder other) {
       super(other);
-      if (isValidValue(fields()[0], other.CC_RelationshipID)) {
-        this.CC_RelationshipID = data().deepCopy(fields()[0].schema(), other.CC_RelationshipID);
+      if (isValidValue(fields()[0], other.CC_Description)) {
+        this.CC_Description = data().deepCopy(fields()[0].schema(), other.CC_Description);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.CC_Description)) {
-        this.CC_Description = data().deepCopy(fields()[1].schema(), other.CC_Description);
+      if (isValidValue(fields()[1], other.CL_ClaimID)) {
+        this.CL_ClaimID = data().deepCopy(fields()[1].schema(), other.CL_ClaimID);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.CL_ClaimID)) {
-        this.CL_ClaimID = data().deepCopy(fields()[2].schema(), other.CL_ClaimID);
+      if (isValidValue(fields()[2], other.CO_ContractID)) {
+        this.CO_ContractID = data().deepCopy(fields()[2].schema(), other.CO_ContractID);
         fieldSetFlags()[2] = true;
-      }
-      if (isValidValue(fields()[3], other.CC_Relationship)) {
-        this.CC_Relationship = data().deepCopy(fields()[3].schema(), other.CC_Relationship);
-        fieldSetFlags()[3] = true;
-      }
-      if (isValidValue(fields()[4], other.CO_ContractID)) {
-        this.CO_ContractID = data().deepCopy(fields()[4].schema(), other.CO_ContractID);
-        fieldSetFlags()[4] = true;
       }
     }
 
@@ -263,64 +211,18 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
      */
     private Builder(org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships other) {
             super(SCHEMA$);
-      if (isValidValue(fields()[0], other.CC_RelationshipID)) {
-        this.CC_RelationshipID = data().deepCopy(fields()[0].schema(), other.CC_RelationshipID);
+      if (isValidValue(fields()[0], other.CC_Description)) {
+        this.CC_Description = data().deepCopy(fields()[0].schema(), other.CC_Description);
         fieldSetFlags()[0] = true;
       }
-      if (isValidValue(fields()[1], other.CC_Description)) {
-        this.CC_Description = data().deepCopy(fields()[1].schema(), other.CC_Description);
+      if (isValidValue(fields()[1], other.CL_ClaimID)) {
+        this.CL_ClaimID = data().deepCopy(fields()[1].schema(), other.CL_ClaimID);
         fieldSetFlags()[1] = true;
       }
-      if (isValidValue(fields()[2], other.CL_ClaimID)) {
-        this.CL_ClaimID = data().deepCopy(fields()[2].schema(), other.CL_ClaimID);
+      if (isValidValue(fields()[2], other.CO_ContractID)) {
+        this.CO_ContractID = data().deepCopy(fields()[2].schema(), other.CO_ContractID);
         fieldSetFlags()[2] = true;
       }
-      if (isValidValue(fields()[3], other.CC_Relationship)) {
-        this.CC_Relationship = data().deepCopy(fields()[3].schema(), other.CC_Relationship);
-        fieldSetFlags()[3] = true;
-      }
-      if (isValidValue(fields()[4], other.CO_ContractID)) {
-        this.CO_ContractID = data().deepCopy(fields()[4].schema(), other.CO_ContractID);
-        fieldSetFlags()[4] = true;
-      }
-    }
-
-    /**
-      * Gets the value of the 'CC_RelationshipID' field.
-      * @return The value.
-      */
-    public java.lang.Integer getCCRelationshipID() {
-      return CC_RelationshipID;
-    }
-
-    /**
-      * Sets the value of the 'CC_RelationshipID' field.
-      * @param value The value of 'CC_RelationshipID'.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder setCCRelationshipID(int value) {
-      validate(fields()[0], value);
-      this.CC_RelationshipID = value;
-      fieldSetFlags()[0] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'CC_RelationshipID' field has been set.
-      * @return True if the 'CC_RelationshipID' field has been set, false otherwise.
-      */
-    public boolean hasCCRelationshipID() {
-      return fieldSetFlags()[0];
-    }
-
-
-    /**
-      * Clears the value of the 'CC_RelationshipID' field.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder clearCCRelationshipID() {
-      fieldSetFlags()[0] = false;
-      return this;
     }
 
     /**
@@ -337,9 +239,9 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       * @return This builder.
       */
     public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder setCCDescription(java.lang.CharSequence value) {
-      validate(fields()[1], value);
+      validate(fields()[0], value);
       this.CC_Description = value;
-      fieldSetFlags()[1] = true;
+      fieldSetFlags()[0] = true;
       return this;
     }
 
@@ -348,7 +250,7 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       * @return True if the 'CC_Description' field has been set, false otherwise.
       */
     public boolean hasCCDescription() {
-      return fieldSetFlags()[1];
+      return fieldSetFlags()[0];
     }
 
 
@@ -358,7 +260,7 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       */
     public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder clearCCDescription() {
       CC_Description = null;
-      fieldSetFlags()[1] = false;
+      fieldSetFlags()[0] = false;
       return this;
     }
 
@@ -376,9 +278,9 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       * @return This builder.
       */
     public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder setCLClaimID(int value) {
-      validate(fields()[2], value);
+      validate(fields()[1], value);
       this.CL_ClaimID = value;
-      fieldSetFlags()[2] = true;
+      fieldSetFlags()[1] = true;
       return this;
     }
 
@@ -387,7 +289,7 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       * @return True if the 'CL_ClaimID' field has been set, false otherwise.
       */
     public boolean hasCLClaimID() {
-      return fieldSetFlags()[2];
+      return fieldSetFlags()[1];
     }
 
 
@@ -396,45 +298,7 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       * @return This builder.
       */
     public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder clearCLClaimID() {
-      fieldSetFlags()[2] = false;
-      return this;
-    }
-
-    /**
-      * Gets the value of the 'CC_Relationship' field.
-      * @return The value.
-      */
-    public java.lang.Integer getCCRelationship() {
-      return CC_Relationship;
-    }
-
-    /**
-      * Sets the value of the 'CC_Relationship' field.
-      * @param value The value of 'CC_Relationship'.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder setCCRelationship(int value) {
-      validate(fields()[3], value);
-      this.CC_Relationship = value;
-      fieldSetFlags()[3] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'CC_Relationship' field has been set.
-      * @return True if the 'CC_Relationship' field has been set, false otherwise.
-      */
-    public boolean hasCCRelationship() {
-      return fieldSetFlags()[3];
-    }
-
-
-    /**
-      * Clears the value of the 'CC_Relationship' field.
-      * @return This builder.
-      */
-    public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder clearCCRelationship() {
-      fieldSetFlags()[3] = false;
+      fieldSetFlags()[1] = false;
       return this;
     }
 
@@ -452,9 +316,9 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       * @return This builder.
       */
     public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder setCOContractID(java.lang.Integer value) {
-      validate(fields()[4], value);
+      validate(fields()[2], value);
       this.CO_ContractID = value;
-      fieldSetFlags()[4] = true;
+      fieldSetFlags()[2] = true;
       return this;
     }
 
@@ -463,7 +327,7 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       * @return True if the 'CO_ContractID' field has been set, false otherwise.
       */
     public boolean hasCOContractID() {
-      return fieldSetFlags()[4];
+      return fieldSetFlags()[2];
     }
 
 
@@ -473,7 +337,7 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
       */
     public org.gms.claimclasses.ClaimContractLink_ClaimContractRelationships.Builder clearCOContractID() {
       CO_ContractID = null;
-      fieldSetFlags()[4] = false;
+      fieldSetFlags()[2] = false;
       return this;
     }
 
@@ -482,11 +346,9 @@ public class ClaimContractLink_ClaimContractRelationships extends org.apache.avr
     public ClaimContractLink_ClaimContractRelationships build() {
       try {
         ClaimContractLink_ClaimContractRelationships record = new ClaimContractLink_ClaimContractRelationships();
-        record.CC_RelationshipID = fieldSetFlags()[0] ? this.CC_RelationshipID : (java.lang.Integer) defaultValue(fields()[0]);
-        record.CC_Description = fieldSetFlags()[1] ? this.CC_Description : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.CL_ClaimID = fieldSetFlags()[2] ? this.CL_ClaimID : (java.lang.Integer) defaultValue(fields()[2]);
-        record.CC_Relationship = fieldSetFlags()[3] ? this.CC_Relationship : (java.lang.Integer) defaultValue(fields()[3]);
-        record.CO_ContractID = fieldSetFlags()[4] ? this.CO_ContractID : (java.lang.Integer) defaultValue(fields()[4]);
+        record.CC_Description = fieldSetFlags()[0] ? this.CC_Description : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.CL_ClaimID = fieldSetFlags()[1] ? this.CL_ClaimID : (java.lang.Integer) defaultValue(fields()[1]);
+        record.CO_ContractID = fieldSetFlags()[2] ? this.CO_ContractID : (java.lang.Integer) defaultValue(fields()[2]);
         return record;
       } catch (java.lang.Exception e) {
         throw new org.apache.avro.AvroRuntimeException(e);
