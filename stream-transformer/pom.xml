@@ -122,7 +122,7 @@
                             <arguments>
                                 <argument>build</argument>
                                 <argument>-t</argument>
-                                <argument>stream-transformer-generic</argument>
+                                <argument>stream-transformer-specific-2.0</argument>
                                 <argument>.</argument>
                             </arguments>
                         </configuration>

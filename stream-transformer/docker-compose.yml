@@ -5,10 +5,31 @@ networks:
         name: setup_default
 
 services:
-    first-join:
-        image: stream-transformer
-        environment:
-            BROKER: http://broker:29092
-            SCHEMA_REGISTRY: http://schema-registry:8081
-            OUTPUT_TOPIC: multi-join-test
-            AUTO_OFFSET_RESET_CONFIG: earliest
+  join1:
+    image: stream-transformer-specific-2.0
+    environment:
+      BROKER: http://broker:29092
+      SCHEMA_REGISTRY: http://schema-registry:8081
+      OUTPUT_TOPIC: join
+      AUTO_OFFSET_RESET_CONFIG: earliest
+  join2:
+    image: stream-transformer-specific-2.0
+    environment:
+      BROKER: http://broker:29092
+      SCHEMA_REGISTRY: http://schema-registry:8081
+      OUTPUT_TOPIC: join
+      AUTO_OFFSET_RESET_CONFIG: earliest
+  join3:
+    image: stream-transformer-specific-2.0
+    environment:
+      BROKER: http://broker:29092
+      SCHEMA_REGISTRY: http://schema-registry:8081
+      OUTPUT_TOPIC: join
+      AUTO_OFFSET_RESET_CONFIG: earliest
+  join4:
+    image: stream-transformer-specific-2.0
+    environment:
+      BROKER: http://broker:29092
+      SCHEMA_REGISTRY: http://schema-registry:8081
+      OUTPUT_TOPIC: join
+      AUTO_OFFSET_RESET_CONFIG: earliest

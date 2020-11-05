@@ -26,6 +26,8 @@ public class main {
     public static void main(String[] args) {
         SetupArguments(args);
         Topology topology = buildTopology();
+        TopologyDescription top = topology.describe();
+        System.out.println(top);
         Properties props = buildProperties();
 
         final KafkaStreams streams = new KafkaStreams(topology, props);
@@ -56,88 +58,49 @@ public class main {
         provide a class based on the output schema
         */
 
-        Object ClaimCase_CaseNoteLink = LeftJoinTopics(
-                new ArrayList(Arrays.asList(
-                        GetKTable("CIMS.Financial.ClaimCase"),
-                        GetKTable("CIMS.Financial.CaseNoteLink")
-                )),
-                "CA_CaseID",
-                ClaimCase_ClaimNoteLink.class
-        );
+        KStream<String, GenericRecord> ClaimCase = GetKStream("CIMS.Financial.CaseNoteLink");
+        KStream<String, GenericRecord> CaseNoteLink = GetKStream("CIMS.Financial.ClaimCase");
+        KTable<String, GenericRecord> ClaimCase_set = ClaimCase.map((key, value) -> KeyValue.pair(GetKey(value, "CA_CaseID"), value)).toTable();
+        KTable<String, GenericRecord> CaseNoteLink_set = CaseNoteLink.map((key, value) -> KeyValue.pair(GetKey(value, "CA_CaseID"), value)).toTable();
+        KTable<String, GenericRecord> ClaimCase_CaseNoteLink =  ClaimCase_set.leftJoin(CaseNoteLink_set, (left, right) -> MergeMessages(left, right, ClaimCase_ClaimNoteLink.class));
 
-        Object ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
-                new ArrayList(Arrays.asList(
-                        GetKTable("CIMS.Financial.ClaimStatusClaimLink"),
-                        GetKTable("CIMS.Financial.ClaimStatus")
-                )),
-                "CS_ClaimStatusID",
-                ClaimStatus_ClaimStatusClaimLink.class
-        );
+        KStream<String, GenericRecord> ClaimStatus = GetKStream("CIMS.Financial.ClaimStatus");
+        KStream<String, GenericRecord> ClaimStatusClaimLink = GetKStream("CIMS.Financial.ClaimStatusClaimLink");
+        KTable<String, GenericRecord> ClaimStatus_set = ClaimStatus.map((key, value) -> KeyValue.pair(GetKey(value, "CS_ClaimStatusID"), value)).toTable();
+        KTable<String, GenericRecord> ClaimStatusClaimLink_set = ClaimStatusClaimLink.map((key, value) -> KeyValue.pair(GetKey(value, "CS_ClaimStatusID"), value)).toTable();
+        KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink =  ClaimStatus_set.leftJoin(ClaimStatusClaimLink_set, (left, right) -> MergeMessages(left, right, ClaimStatus_ClaimStatusClaimLink.class));
 
-        Object ClaimContractLink_ClaimContractRelationships = LeftJoinTopics(
-                new ArrayList(Arrays.asList(
-                        GetKStream("CIMS.Financial.ClaimContractLink"),
-                        GetKTable("CIMS.Reference.ClaimContractRelationships")
-                )),
-                "CC_Relationship[ID]{0,2}",
-                ClaimContractLink_ClaimContractRelationships.class
-        );
+        KStream<String, GenericRecord> ClaimContractLink = GetKStream("CIMS.Financial.ClaimContractLink");
+        KStream<String, GenericRecord> ClaimContractRelationships = GetKStream("CIMS.Reference.ClaimContractRelationships");
+        KStream<String, GenericRecord> ClaimContractLink_set = ClaimContractLink.map((key, value) -> KeyValue.pair(GetKey(value, "CC_Relationship"), value));
+        KTable<String, GenericRecord> ClaimContractRelationships_set = ClaimContractRelationships.map((key, value) -> KeyValue.pair(GetKey(value, "CC_RelationshipID"), value)).toTable();
+        KStream<String, GenericRecord> ClaimContractLink_ClaimContractRelationships =  ClaimContractLink_set.leftJoin(ClaimContractRelationships_set, (left, right) -> MergeMessages(left, right, ClaimContractLink_ClaimContractRelationships.class));
 
-        Object Claim_ClaimStatus_ClaimStatusClaimLink = LeftJoinTopics(
-                new ArrayList(Arrays.asList(
-                        GetKTable("CIMS.Financial.Claim"),
-                        ClaimStatus_ClaimStatusClaimLink
-                )),
-                "CL_ClaimID",
-                Claim_ClaimStatus_ClaimStatusClaimLink.class
-        );
+        KStream<String, GenericRecord> Claim = GetKStream("CIMS.Financial.Claim");
+        KTable<String, GenericRecord> Claim_set = Claim.map((key, value) -> KeyValue.pair(GetKey(value, "CL_ClaimID"), value)).toTable();
+        KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink_set = ClaimStatus_ClaimStatusClaimLink.toStream().map((key, value) -> KeyValue.pair(GetKey(value, "CL_ClaimID"), value)).toTable();
+        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink =  Claim_set.leftJoin(ClaimStatus_ClaimStatusClaimLink_set, (left, right) -> MergeMessages(left, right, Claim_ClaimStatus_ClaimStatusClaimLink.class));
 
-        Object Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink = LeftJoinTopics(
-                new ArrayList(Arrays.asList(
-                        Claim_ClaimStatus_ClaimStatusClaimLink,
-                        ClaimCase_CaseNoteLink
-                )),
-                "CA_CaseID",
-                Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink.class
-        );
+        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_set = Claim_ClaimStatus_ClaimStatusClaimLink.toStream().map((key, value) -> KeyValue.pair(GetKey(value, "CA_CaseID"), value)).toTable();
+        KTable<String, GenericRecord> ClaimCase_CaseNoteLink_set = ClaimCase_CaseNoteLink.toStream().map((key, value) -> KeyValue.pair(GetKey(value, "CA_CaseID"), value)).toTable();
+        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink =  Claim_ClaimStatus_ClaimStatusClaimLink_set.leftJoin(ClaimCase_CaseNoteLink_set, (left, right) -> MergeMessages(left, right, Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink.class));
 
-        Object Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships = LeftJoinTopics(
-                new ArrayList(Arrays.asList(
-                        Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink,
-                        ((KStream) ClaimContractLink_ClaimContractRelationships).toTable()
-                )),
-                "CL_ClaimID",
-                Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.class
-        );
+        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink_set = Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink.toStream().map((key, value) -> KeyValue.pair(GetKey(value, "CL_ClaimID"), value)).toTable();
+        KTable<String, GenericRecord> ClaimContractLink_ClaimContractRelationships_set = ClaimContractLink_ClaimContractRelationships.map((key, value) -> KeyValue.pair(GetKey(value, "CL_ClaimID"), value)).toTable();
+        KTable<String, GenericRecord> Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships =  Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_CaseNoteLink_set.leftJoin(ClaimContractLink_ClaimContractRelationships_set, (left, right) -> MergeMessages(left, right, Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.class));
 
-        ((KTable) Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships).toStream().to(Arguments.OutputTopic);
+        Claim_ClaimStatus_ClaimStatusClaimLink_ClaimCase_ClaimNoteLink_ClaimContractLink_ClaimContractRelationships.toStream().to(Arguments.OutputTopic);
 
         return Arguments.builder.build();
     }
 
-    // return one KTable from Array of KTables that are left joined
-    private static Object LeftJoinTopics(ArrayList<Object> topics, String regex, Class<?> Class) {
-        ArrayList<Object> KeySetTopics = new ArrayList<>();
-        for (Object topic : topics) KeySetTopics.add(SetCommonKey(topic, regex));
-        return LeftJoin(KeySetTopics, Class);
-    }
-
-    // set the key of the KTable
-    private static Object SetCommonKey(Object topic, String regex) {
-        if (topic instanceof KTable) return ((KTable<String, GenericRecord>) topic).toStream().map((key, value) -> KeyValue.pair(GetKey(value, regex), value)).toTable();
-        if (topic instanceof KStream) return ((KStream<String, GenericRecord>) topic).map((key, value) -> KeyValue.pair(GetKey(value, regex), value));
-        else return null;
-    }
-
     // get the key of a genericRecord
     private static String GetKey(GenericRecord value, String regex) {
-        if (value==null){
-            return null;
-        }
-        Pattern p = Pattern.compile(regex);
+        if (value==null) return null;
+        /*Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(value.toString());
-        if (m.find()) return value.get(m.group(0)).toString();
-        else return null;
+        if (m.find()) return value.get(m.group(0)).toString();*/
+        else return value.get(regex).toString();
     }
 
     // return KTable from topic name
@@ -150,37 +113,16 @@ public class main {
         return Arguments.builder.stream(topic);
     }
 
-    // left join Array of KTables
-    private static Object LeftJoin(ArrayList<Object> topics, Class<?> Class) {
-        KTable<String, GenericRecord> rightTopic = (KTable<String, GenericRecord>) topics.get(1);
-        if (topics.get(0) instanceof KStream) {
-            return ((KStream<String, GenericRecord>) topics.get(0)).leftJoin(rightTopic, (left, right) -> {
-                try {
-                    return MergeMessages(left, right, Class);
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            });
-        }
-        if (topics.get(0) instanceof KTable) {
-            return ((KTable<String, GenericRecord>) topics.get(0)).leftJoin(rightTopic, (left, right) -> {
-                try {
-                    return MergeMessages(left, right, Class);
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                    return null;
-                }
-            });
-        }
-        return null;
-    }
-
     // merge 2 genericRecords and return a new genericRecord using the defined output class
-    private static GenericRecord MergeMessages(GenericRecord left, GenericRecord right, Class<?> Class) throws JsonProcessingException {
+    private static GenericRecord MergeMessages(GenericRecord left, GenericRecord right, Class<?> Class) {
         String mergedValues = MergeValues(left, right);
         ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        return (GenericRecord) objectMapper.readValue(mergedValues, Class);
+        try {
+            return (GenericRecord) objectMapper.readValue(mergedValues, Class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     // merge the contents of 2 genericRecords
