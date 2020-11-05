@@ -1,6 +1,6 @@
 {
     "type": "record",
-    "name": "Claim_ClaimStatus_ClaimStatusClaimLink",
+    "name": "Claim_ClaimStatus_ClaimStatusClaimLink_ClaimState",
     "namespace": "org.gms.claimclasses",
     "fields": [
         {
@@ -44,10 +44,10 @@
             }
         },
         {
-            "name": "CB_ClaimStateID",
+            "name": "CB_Description",
             "type": [
                 "null",
-                "int"
+                "string"
             ],
             "default": null
         }

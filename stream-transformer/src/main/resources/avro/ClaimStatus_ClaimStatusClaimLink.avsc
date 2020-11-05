@@ -4,10 +4,6 @@
     "namespace": "org.gms.claimclasses",
     "fields": [
         {
-            "name": "CS_ClaimStatusID",
-            "type": "int"
-        },
-        {
             "name": "CS_Description",
             "type": [
                 "null",

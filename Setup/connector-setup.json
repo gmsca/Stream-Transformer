@@ -15,7 +15,7 @@
         "topic.creation.default.replication.factor": 1,  
         "topic.creation.default.partitions": 10,  
 
-        "table.include.list": ".*ClaimCase, .*CaseNoteLink, .*ClaimStatus, .*ClaimStatusClaimLink, .*Claim, .*ClaimContractLink, .*ClaimContractRelationships",
+        "table.include.list": ".*ClaimStatus, .*ClaimStatusClaimLink, .*Claim, .*ClaimState",
         "column.exclude.list": ".*RowVersion, .*LastUpdate, .*UserID",
         "value.converter": "io.confluent.connect.avro.AvroConverter",
         "value.converter.schema.registry.url": "http://schema-registry:8081",
