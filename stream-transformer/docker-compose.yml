@@ -12,24 +12,3 @@ services:
       SCHEMA_REGISTRY: http://schema-registry:8081
       OUTPUT_TOPIC: test-ux
       AUTO_OFFSET_RESET_CONFIG: earliest
-  join2:
-    image: stream-transformer-ux
-    environment:
-      BROKER: http://broker:29092
-      SCHEMA_REGISTRY: http://schema-registry:8081
-      OUTPUT_TOPIC: test-ux
-      AUTO_OFFSET_RESET_CONFIG: earliest
-  join3:
-    image: stream-transformer-ux
-    environment:
-      BROKER: http://broker:29092
-      SCHEMA_REGISTRY: http://schema-registry:8081
-      OUTPUT_TOPIC: test-ux
-      AUTO_OFFSET_RESET_CONFIG: earliest
-  join4:
-    image: stream-transformer-ux
-    environment:
-      BROKER: http://broker:29092
-      SCHEMA_REGISTRY: http://schema-registry:8081
-      OUTPUT_TOPIC: test-ux
-      AUTO_OFFSET_RESET_CONFIG: earliest

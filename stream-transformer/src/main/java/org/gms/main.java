@@ -15,8 +15,6 @@ import org.gms.claimclasses.*;
 import org.json.JSONObject;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -81,16 +79,8 @@ public class main {
 
     // get the key of a genericRecord
     private static String GetKey(GenericRecord value, String regex) {
-        if (value==null) return null;
-        /*Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(value.toString());
-        if (m.find()) return value.get(m.group(0)).toString();*/
+        if (value==null || value.get(regex)==null) return null;
         else return value.get(regex).toString();
-    }
-
-    // return KTable from topic name
-    private static KTable<String, GenericRecord> GetKTable(String topic) {
-        return Arguments.builder.table(topic);
     }
 
     // return KStream from topic name
