@@ -11,11 +11,27 @@ import { catchError, takeUntil } from 'rxjs/operators';
   templateUrl: './message-stream.component.html',
   styleUrls: ['./message-stream.component.css']
 })
+
 export class MessageStreamComponent implements OnInit, OnDestroy {
 
   myForm: FormGroup;
 
-  messages: string[];
+  private _messages: Array<string> = [];
+  parsedVal: any;
+  private _values = [];
+
+  get messages() { return this._messages; }
+  set messages(value: any) {
+    // console.log("bbb", value);
+    this.parsedVal = JSON.parse(value);
+
+    for (const [key, value] of Object.entries(this.parsedVal)) {
+      console.log(`${key}: ${value}`);
+    }
+  }
+
+  get values() { return this._values; }
+  set values(value) { this._values = value; }
 
   private destroy$ = new Subject();
 
@@ -29,8 +45,6 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.messages = [];
-
     if (this.rxStompService.connected) {
       this.rxStompService.watch('/topic/messages')
         .pipe(
@@ -41,6 +55,9 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
           this.messages = this.messages.slice(-1);
         });
     }
+    else {
+      console.log("rxStmpeService not connected");
+    };
   }
 
   ngOnDestroy(): void {
@@ -63,5 +80,14 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
   private handleError(error: HttpErrorResponse): Observable<any> {
     return of(null);
   }
-
 }
+
+// class Claim {
+//   id: number;                // CL_CLaimID
+//   isSubmitted: boolean;      // CL_FeeSubmitted
+//   totalOwed: number;         // CL_TotalOwed   
+//   isPaid: boolean;           // CL_Paid
+//   csDescription: String;     // CS_Description
+//   processDate: Date;         // CL_ProcessDate
+//   cbDescription: String;     // CB_Description
+// }

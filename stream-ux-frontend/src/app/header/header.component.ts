@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { faBars, faSearch, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 
-// import { AuthService, ConfigService } from '@gms/core';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit {
   searchToggled = false;
   isCollapsed = true;
   isToggled = true;
+  icon = { faBars, faSearch, faAngleDown };
 
   constructor() { }
 

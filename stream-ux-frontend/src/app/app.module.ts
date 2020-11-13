@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { MessageStreamComponent } from './message-stream/message-stream.component';
 import { myRxStompConfig } from './rx-stomp.config';
 import { HeaderComponent } from './header/header.component';
+import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
    declarations: [
       AppComponent,
       MessageStreamComponent,
-      HeaderComponent
+      HeaderComponent,
+      BreadcrumbsComponent
    ],
    imports: [
       BrowserModule,

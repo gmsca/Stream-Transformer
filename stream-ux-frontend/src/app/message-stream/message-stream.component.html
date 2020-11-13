@@ -1,18 +1,6 @@
-<!-- <form [formGroup]="myForm" (ngSubmit)="submit()">
-
-  Produce nº messages: <input type="number" id="numberInput" formControlName="nMessage">
-  <button type = "submit">Start Kafka Sample Message Producer</button>
-
-</form> -->
-
-<BR />
-
-<div>
-
-  <p *ngIf="messages.length == 0">Empty here. Consume some messages.</p>
-
-  <p *ngFor="let msg of messages">{{ msg }}</p>
-  <br/>
-  <br/>
-  <br/>
-</div>
+<smart-container-gms-wc>
+  <p row="1" col="12" *ngIf="messages.length == 0">Empty here. Consume some messages.</p>
+  <div *ngFor="let val of parsedVal| keyvalue">
+    {{ val.key }} - {{ val.value }}
+  </div>
+</smart-container-gms-wc>
