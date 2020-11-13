@@ -17,21 +17,15 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
   myForm: FormGroup;
 
   private _messages: Array<string> = [];
-  parsedVal: any;
-  private _values = [];
+  private _parsedMsg: any;
 
   get messages() { return this._messages; }
   set messages(value: any) {
-    // console.log("bbb", value);
-    this.parsedVal = JSON.parse(value);
-
-    for (const [key, value] of Object.entries(this.parsedVal)) {
-      console.log(`${key}: ${value}`);
-    }
+    this._parsedMsg = JSON.parse(value);
   }
 
-  get values() { return this._values; }
-  set values(value) { this._values = value; }
+  get parsedMsg(): any { return this._parsedMsg; }
+  set parsedMsg(value: any) { this._parsedMsg = value; }
 
   private destroy$ = new Subject();
 
@@ -52,7 +46,7 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
         ).subscribe((message: Message) => {
           console.log('Received from websocket: ' + message.body);
           this.messages.push(message.body);
-          this.messages = this.messages.slice(-3);
+          this.messages = this.messages.slice(-1);
         });
     }
     else {
@@ -82,12 +76,12 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
   }
 }
 
-// class Claim {
-//   id: number;                // CL_CLaimID
-//   isSubmitted: boolean;      // CL_FeeSubmitted
-//   totalOwed: number;         // CL_TotalOwed   
-//   isPaid: boolean;           // CL_Paid
-//   csDescription: String;     // CS_Description
-//   processDate: Date;         // CL_ProcessDate
-//   cbDescription: String;     // CB_Description
-// }
+class Claim {
+  id: number;                // CL_CLaimID
+  isSubmitted: boolean;      // CL_FeeSubmitted
+  totalOwed: number;         // CL_TotalOwed   
+  isPaid: boolean;           // CL_Paid
+  csDescription: String;     // CS_Description
+  processDate: Date;         // CL_ProcessDate
+  cbDescription: String;     // CB_Description
+}

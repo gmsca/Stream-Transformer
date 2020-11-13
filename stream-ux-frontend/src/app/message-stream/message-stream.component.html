@@ -4,8 +4,8 @@
   </div>
   <ng-template #printMsgs>
     <h2-gms-wc row="1" col="12" text="Recent Updated Claim"></h2-gms-wc>
-    <div *ngFor="let val of parsedVal| keyvalue">
-      <p-gms-wc row="2" col="6" text="{{val.key}} - {{val.value}}"></p-gms-wc>
+    <div *ngFor="let msg of parsedMsg| keyvalue">
+      <p-gms-wc row="2" col="6" text="{{msg.key}} - {{msg.value}}"></p-gms-wc>
     </div>
   </ng-template>
 </smart-container-gms-wc>
