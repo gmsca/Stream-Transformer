@@ -1,15 +1,54 @@
 import { Component, OnInit } from '@angular/core';
 
+// import { AuthService, ConfigService } from '@gms/core';
+
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit {
+  searchQuery: string;
+  cimsUrl: string;
+  searchToggled = false;
+  isCollapsed = true;
+  isToggled = true;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  toggleSearch() {
+    this.searchToggled = !this.searchToggled;
   }
 
+  onSearchKeyPress(event) {
+    if (event.keyCode === 13) {
+      this.doSearch();
+    }
+  }
+
+  onSearchClick(event) {
+    event.preventDefault();
+    this.doSearch();
+  }
+
+  doSearch() {
+    if (window && this.searchQuery) {
+      window.location.href =
+        'http://www.gms.ca/search?Text=' + this.searchQuery;
+    }
+  }
+
+  isLoggedIn() {
+    return false;
+  }
+
+  displayName() { }
+
+  logout() { }
+
+  toggleDropdown() {
+    this.isToggled = !this.isToggled;
+  }
 }

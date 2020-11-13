@@ -136,5 +136,8 @@
       }
     }
   },
-  "defaultProject": "kafka-ws-frontend"
+  "defaultProject": "kafka-ws-frontend",
+  "cli": {
+    "analytics": "78e5c626-ea73-44d4-9ee0-888921427d37"
+  }
 }
