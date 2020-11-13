@@ -1,0 +1,55 @@
+{
+    "type": "record",
+    "name": "Claim_ClaimStatus_ClaimStatusClaimLink_ClaimState",
+    "namespace": "org.gms.claimclasses",
+    "fields": [
+        {
+            "name": "CL_ClaimID",
+            "type": "int"
+        },
+        {
+            "name": "CL_FeeSubmitted",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_TotalOwed",
+            "type": [
+                "null",
+                "double"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_Paid",
+            "type": "boolean"
+        },
+        {
+            "name": "CS_Description",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        },
+        {
+            "name": "CL_ProcessDate",
+            "type": {
+                "type": "int",
+                "connect.version": 1,
+                "connect.name": "io.debezium.time.Date"
+            }
+        },
+        {
+            "name": "CB_Description",
+            "type": [
+                "null",
+                "string"
+            ],
+            "default": null
+        }
+    ]
+}

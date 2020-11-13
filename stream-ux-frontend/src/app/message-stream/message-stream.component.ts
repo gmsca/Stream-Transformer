@@ -20,8 +20,8 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(private frmBuilder: FormBuilder,
-              private http: HttpClient,
-              private rxStompService: RxStompService) {
+    private http: HttpClient,
+    private rxStompService: RxStompService) {
 
     this.myForm = frmBuilder.group(
       { nMessage: '10' }
@@ -31,14 +31,16 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.messages = [];
 
-    this.rxStompService.watch('/topic/messages')
-      .pipe(
-        takeUntil(this.destroy$)
-      ).subscribe((message: Message) => {
-        console.log('Received from websocket: ' + message.body);
-        this.messages.push(message.body);
-        this.messages = this.messages.slice(-1);
-      });
+    if (this.rxStompService.connected) {
+      this.rxStompService.watch('/topic/messages')
+        .pipe(
+          takeUntil(this.destroy$)
+        ).subscribe((message: Message) => {
+          console.log('Received from websocket: ' + message.body);
+          this.messages.push(message.body);
+          this.messages = this.messages.slice(-1);
+        });
+    }
   }
 
   ngOnDestroy(): void {

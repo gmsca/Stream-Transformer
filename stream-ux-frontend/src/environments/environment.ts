@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  gmsWebComponents: 'http://localhost:5554/gmswclib-element.js',
+  gmsWeburl: 'http://localhost:5554',
 };
 
 /*
