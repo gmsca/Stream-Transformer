@@ -52,7 +52,7 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
         ).subscribe((message: Message) => {
           console.log('Received from websocket: ' + message.body);
           this.messages.push(message.body);
-          this.messages = this.messages.slice(-1);
+          this.messages = this.messages.slice(-3);
         });
     }
     else {
