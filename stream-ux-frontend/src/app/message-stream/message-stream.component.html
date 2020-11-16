@@ -1,11 +1,56 @@
 <smart-container-gms-wc>
-  <div *ngIf="messages.length == 0; else printMsgs">
+  <div *ngIf="claims.length == 0; else printMsgs">
     <p-gms-wc row="1" col="12" text="Empty here. Consume some messages."></p-gms-wc>
   </div>
   <ng-template #printMsgs>
     <h2-gms-wc row="1" col="12" text="Recent Updated Claim"></h2-gms-wc>
-    <div *ngFor="let msg of parsedMsg| keyvalue">
-      <p-gms-wc row="2" col="6" text="{{msg.key}} - {{msg.value}}"></p-gms-wc>
+    <div style="width: 75%;">
+      <!-- <p-gms-wc row="2" col="6" text="{{msg.key}} - {{msg.value}}"></p-gms-wc> -->
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>Claim ID</th>
+            <th>Claim submitted</th>
+            <th>Total Owed</th>
+            <th>Claim Paid</th>
+            <th>Claim Status</th>
+            <th>Process Date</th>
+            <th>Claim Description</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let claim of claims">
+          <td>{{claim.id}}</td>
+          <td>{{claim.isSubmitted}}</td>
+          <td>{{claim.totalOwed}}</td>
+          <td>{{claim.isPaid}}</td>
+          <td>{{claim.cbDescription}}</td>
+          <td>{{claim.processDate}}</td>
+          <td>{{claim.csDescription}}</td>
+        </tr>
+      </table>
     </div>
   </ng-template>
 </smart-container-gms-wc>
+
+<!-- <div class="">
+  <table style="width:75%">
+    <tr>
+      <th>Claim ID</th>
+      <th>Claim submitted</th>
+      <th>Total Owed</th>
+      <th>Claim Paid</th>
+      <th>Claim Status</th>
+      <th>Process Date</th>
+      <th>Claim Description</th>
+    </tr>
+    <tr *ngFor="let claim of claims">
+      <td>{{claim.id}}</td>
+      <td>{{claim.isSubmitted}}</td>
+      <td>{{claim.totalOwed}}</td>
+      <td>{{claim.isPaid}}</td>
+      <td>{{claim.cbDescription}}</td>
+      <td>{{claim.processDate}}</td>
+      <td>{{claim.csDescription}}</td>
+    </tr>
+  </table>
+</div> -->

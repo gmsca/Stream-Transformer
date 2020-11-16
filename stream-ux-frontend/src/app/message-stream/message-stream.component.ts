@@ -17,17 +17,37 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
   myForm: FormGroup;
 
   private _messages: Array<string> = [];
-  private _parsedMsg: any;
+  // private _parsedMsg: string;
+  claims: Array<Claim> = [];
 
   get messages() { return this._messages; }
-  set messages(value: any) {
-    this._parsedMsg = JSON.parse(value);
-  }
+  set messages(value: any) { this._messages = value; }
 
-  get parsedMsg(): any { return this._parsedMsg; }
-  set parsedMsg(value: any) { this._parsedMsg = value; }
+  // get parsedMsg(): string { return this._parsedMsg; }
+  // set parsedMsg(value: string) { this._parsedMsg = value; }
 
   private destroy$ = new Subject();
+
+  processMessages() {
+    let claim = new Claim();
+
+    this.messages.forEach(msg => {
+      let parseMsg = JSON.parse(msg);
+      // put in claim class
+      claim.id = parseMsg['CL_ClaimID'];
+      claim.isSubmitted = parseMsg['CL_FeeSubmitted'];
+      claim.totalOwed = parseMsg['CL_TotalOwed'];
+      claim.isPaid = parseMsg['CL_Paid'];
+      claim.csDescription = parseMsg['CS_Description'];
+      claim.processDate = parseMsg['CL_ProcessDate'];
+      claim.cbDescription = parseMsg['CB_Description'];
+
+      this.claims.push(claim);
+      this.claims = this.claims.slice(-1);
+    });
+
+    console.log(claim);
+  }
 
   constructor(private frmBuilder: FormBuilder,
     private http: HttpClient,
@@ -47,10 +67,11 @@ export class MessageStreamComponent implements OnInit, OnDestroy {
           console.log('Received from websocket: ' + message.body);
           this.messages.push(message.body);
           this.messages = this.messages.slice(-1);
+          this.processMessages();
         });
     }
     else {
-      console.log("rxStmpeService not connected");
+      console.log("rxStmpeService not connected.");
     };
   }
 
