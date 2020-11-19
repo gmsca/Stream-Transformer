@@ -49,13 +49,6 @@ public class main {
     // define how to transform input streams in build topology
     private static Topology buildTopology() {
 
-        /*
-        create 1 KTable from array of input topics
-        the first element in the arraylist is the left-most item and gets joined last
-        specify a regex expression that will select a common key between input tables
-        provide a class based on the output schema
-        */
-
         KStream<String, GenericRecord> ClaimStatus = GetKStream("CIMS.Financial.ClaimStatus");
         KStream<String, GenericRecord> ClaimStatusClaimLink = GetKStream("CIMS.Financial.ClaimStatusClaimLink");
         KTable<String, GenericRecord> ClaimStatus_set = ClaimStatus.map((key, value) -> KeyValue.pair(GetKey(value, "CS_ClaimStatusID"), value)).toTable();

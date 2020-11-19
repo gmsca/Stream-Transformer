@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="fba50023-e3bf-45ce-8f8b-a12f8d9a9ee9" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/stream-ux-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/stream-ux-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stream-ux-frontend/src/app/message-stream/message-stream.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/stream-ux-frontend/src/app/message-stream/message-stream.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stream-ux-frontend/src/app/message-stream/message-stream.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/stream-ux-frontend/src/app/message-stream/message-stream.component.html" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2019.3.4\plugins\maven\lib\maven3" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="1kWBsVOktjbsqXvZXEqIafJAIhC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="fba50023-e3bf-45ce-8f8b-a12f8d9a9ee9" name="Default Changelist" comment="" />
+      <created>1605806674142</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605806674142</updated>
+    </task>
+    <servers />
+  </component>
+</project>
