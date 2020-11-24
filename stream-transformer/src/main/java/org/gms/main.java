@@ -24,8 +24,6 @@ public class main {
     public static void main(String[] args) {
         SetupArguments(args);
         Topology topology = buildTopology();
-        TopologyDescription top = topology.describe();
-        System.out.println(top);
         Properties props = buildProperties();
 
         final KafkaStreams streams = new KafkaStreams(topology, props);

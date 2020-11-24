@@ -24,30 +24,16 @@
     </properties>
 
     <dependencies>
-        <!--STREAMS-->
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-streams</artifactId>
             <version>6.0.0-ccs</version>
-        </dependency>
-        <!--STREAMS-->
-        <!--AVRO-->
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro</artifactId>
-            <version>1.10.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.avro</groupId>
-            <artifactId>avro-maven-plugin</artifactId>
-            <version>1.10.0</version>
         </dependency>
         <dependency>
             <groupId>io.confluent</groupId>
             <artifactId>kafka-streams-avro-serde</artifactId>
             <version>6.0.0</version>
         </dependency>
-        <!--AVRO-->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
