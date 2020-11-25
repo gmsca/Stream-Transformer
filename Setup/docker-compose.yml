@@ -104,3 +104,50 @@
         KAFKA_REST_BOOTSTRAP_SERVERS: 'broker:29092'
         KAFKA_REST_LISTENERS: "http://0.0.0.0:8082"
         KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+
+    control-center:
+      image: confluentinc/cp-enterprise-control-center:6.0.0
+      hostname: control-center
+      container_name: control-center
+      depends_on:
+        - broker
+        - schema-registry
+        - connect
+        - ksqldb-server
+      ports:
+        - "9021:9021"
+      environment:
+        CONTROL_CENTER_BOOTSTRAP_SERVERS: 'broker:29092'
+        CONTROL_CENTER_CONNECT_CLUSTER: 'connect:8083'
+        CONTROL_CENTER_KSQL_KSQLDB1_URL: "http://ksqldb-server:8088"
+        CONTROL_CENTER_KSQL_KSQLDB1_ADVERTISED_URL: "http://localhost:8088"
+        CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+        CONTROL_CENTER_REPLICATION_FACTOR: 1
+        CONTROL_CENTER_INTERNAL_TOPICS_PARTITIONS: 1
+        CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
+        CONFLUENT_METRICS_TOPIC_REPLICATION: 1
+        PORT: 9021
+        
+    ksqldb-server:
+      image: confluentinc/ksqldb-server:0.13.0
+      hostname: ksqldb-server
+      container_name: ksqldb-server
+      depends_on:
+        - broker
+      ports:
+        - "8088:8088"
+      environment:
+        KSQL_LISTENERS: http://0.0.0.0:8088
+        KSQL_BOOTSTRAP_SERVERS: broker:29092
+        KSQL_KSQL_SCHEMA_REGISTRY_URL: http://schema-registry:8081
+        KSQL_KSQL_LOGGING_PROCESSING_STREAM_AUTO_CREATE: "true"
+        KSQL_KSQL_LOGGING_PROCESSING_TOPIC_AUTO_CREATE: "true"
+
+    ksqldb-cli:
+      image: confluentinc/ksqldb-cli:0.13.0
+      container_name: ksqldb-cli
+      depends_on:
+        - broker
+        - ksqldb-server
+      entrypoint: /bin/sh
+      tty: true
