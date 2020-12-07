@@ -1,1 +1,0 @@
-./mvnw install -DskipTests=true && cf push
