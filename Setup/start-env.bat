@@ -12,13 +12,15 @@ pushd %~dp0
 echo Moving Debezium files to D:\debezium-connector-sqlserver
 RMDIR /Q/S D:\debezium-connector-sqlserver
 echo D|xcopy /E ..\debezium-connector-sqlserver D:\debezium-connector-sqlserver
-echo Starting SQL Server Agent:
+echo Starting SQL Server and Agent:
+net start "SQL Server (MSSQLSERVER)"
 net start "SQL Server Agent (MSSQLSERVER)"
 echo Running SQL Setup
 sqlcmd -S %COMPUTERNAME% -i .\setup.sql
 echo Starting Docker Containers
 docker-compose up -d
-echo WAITING 45 SECONDS
+echo WAITING 45 SECONDS FOR KAFKA CONNECT TO BECOME AVAILABLE
 timeout /t 45
-echo Setting up Connectors
-curl -s -X POST -H "Content-Type: application/json" --data @connector-setup.json http://localhost:8083/connectors
+echo Setting up Connectors Please Wait:
+curl -X POST http://localhost:8083/connectors -H Content-Type:application/json -d @connector-setup.json
+pause
