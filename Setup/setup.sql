@@ -11,7 +11,11 @@ GO
 ALTER ROLE [db_owner] ADD MEMBER [debezium]
 GO
 
--- Enable CDC on DB --
+-- Disable, then Enable CDC on DB --
+USE CIMS
+GO
+EXEC sys.sp_cdc_disable_db
+GO
 USE CIMS
 GO
 EXEC sys.sp_cdc_enable_db
@@ -43,8 +47,4 @@ EXEC sys.sp_cdc_enable_table
 @source_schema = N'Reference',
 @source_name   = N'ClaimState',
 @role_name     = N'debezium'--,
-GO
-
--- Display affected tables in table view --
-EXEC sys.sp_cdc_help_change_data_capture
 GO

@@ -1,0 +1,22 @@
+version: '2'
+
+networks:
+  default:
+    external:
+      name: setup_default
+
+services:
+  ksqldb-server:
+      image: confluentinc/ksqldb-server:0.14.0
+      hostname: ksqldb-server
+      container_name: ksqldb-server
+      ports:
+        - "8088:8088"
+      volumes:
+        - D:\join-query:/join
+      environment:
+        KSQL_BOOTSTRAP_SERVERS: "broker:29092"
+        KSQL_KSQL_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+        KSQL_KSQL_SERVICE_ID: HEADLESS_
+        KSQL_KSQL_QUERIES_FILE: /join/join.sql
+        KSQL_KSQL_STREAMS_AUTO_OFFSET_RESET: earliest

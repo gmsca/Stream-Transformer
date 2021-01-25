@@ -48,10 +48,15 @@ public class main {
     private static Topology buildTopology() {
 
         KStream<String, GenericRecord> ClaimStatus = GetKStream("CIMS.Financial.ClaimStatus");
-        KTable<String, GenericRecord> ClaimStatus_set = ClaimStatus.map((key, value) -> KeyValue.pair(GetKey(value, "CS_ClaimStatusID"), value)).toTable();
+        KTable<String, GenericRecord> ClaimStatus_set = ClaimStatus.map((key, value) ->
+                KeyValue.pair(GetKey(value, "CS_ClaimStatusID"), value)).toTable();
+
         KStream<String, GenericRecord> ClaimStatusClaimLink = GetKStream("CIMS.Financial.ClaimStatusClaimLink");
-        KTable<String, GenericRecord> ClaimStatusClaimLink_set = ClaimStatusClaimLink.map((key, value) -> KeyValue.pair(GetKey(value, "CS_ClaimStatusID"), value)).toTable();
-        KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink =  ClaimStatus_set.leftJoin(ClaimStatusClaimLink_set, (left, right) -> MergeMessages(left, right, ClaimStatus_ClaimStatusClaimLink.class));
+        KTable<String, GenericRecord> ClaimStatusClaimLink_set = ClaimStatusClaimLink.map((key, value) ->
+                KeyValue.pair(GetKey(value, "CS_ClaimStatusID"), value)).toTable();
+
+        KTable<String, GenericRecord> ClaimStatus_ClaimStatusClaimLink =  ClaimStatus_set.leftJoin(ClaimStatusClaimLink_set, (left, right) ->
+                MergeMessages(left, right, ClaimStatus_ClaimStatusClaimLink.class));
 
         KStream<String, GenericRecord> Claim = GetKStream("CIMS.Financial.Claim");
         KTable<String, GenericRecord> Claim_set = Claim.map((key, value) -> KeyValue.pair(GetKey(value, "CL_ClaimID"), value)).toTable();
